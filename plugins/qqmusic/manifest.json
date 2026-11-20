@@ -1,0 +1,95 @@
+{
+  "id": "qqmusic",
+  "name": "QQ 音乐",
+  "version": "0.1.29",
+  "api_version": "1",
+  "core_api": ">=0.1.0,<0.2.0",
+  "runtime": "python>=3.12",
+  "entrypoint": "provider.py",
+  "login_types": [
+    "qq",
+    "wx",
+    "mobile"
+  ],
+  "license": "GPL-3.0-or-later",
+  "enabled": true,
+  "capabilities": [
+    "qr_login",
+    "logout",
+    "refresh",
+    "search",
+    "metadata",
+    "playlists",
+    "playlist_tracks",
+    "liked_songs",
+    "recommendations",
+    "sync",
+    "qualities",
+    "resolve",
+    "lyrics",
+    "original_cache",
+    "conditional_download",
+    "metadata_sections_v1",
+    "account_context_v1",
+    "playlist_write_v1",
+    "isolated_background_v1",
+    "isolated_lyrics_v1",
+    "comments_read_v1",
+    "related_catalog_v1",
+    "artist_albums_v1",
+    "album_catalog_v1",
+    "catalog_order_v1",
+    "public_metadata_v1",
+    "artwork_probe_v1"
+  ],
+  "artwork_hosts": ["y.gtimg.cn"],
+  "upstream": "https://github.com/L-1124/QQMusicApi",
+  "quality_options": [
+    {
+      "id": "native",
+      "label": "原生 Hi-Res 优先，依次回退"
+    },
+    {
+      "id": "HIRES",
+      "label": "仅 Hi-Res（不可用时报错）"
+    },
+    {
+      "id": "FLAC",
+      "label": "FLAC 无损"
+    },
+    {
+      "id": "MP3_320",
+      "label": "MP3 320 kbps"
+    },
+    {
+      "id": "MP3_128",
+      "label": "MP3 128 kbps"
+    }
+  ],
+  "login_labels": {
+    "qq": "QQ 扫码",
+    "wx": "微信扫码",
+    "mobile": "QQ 移动扫码"
+  },
+  "login_copy": {
+    "qq": {
+      "title": "QQ 音乐 · QQ扫码登录",
+      "scan": "使用手机QQ扫一扫",
+      "scanned": "已扫码，请在手机QQ中确认",
+      "qrLabel": "QQ 音乐手机QQ登录二维码"
+    },
+    "wx": {
+      "title": "QQ 音乐 · 微信扫码登录",
+      "scan": "使用微信扫一扫",
+      "scanned": "已扫码，请在微信中确认",
+      "qrLabel": "QQ 音乐微信登录二维码"
+    },
+    "mobile": {
+      "title": "QQ 音乐 · QQ 移动扫码登录",
+      "scan": "使用手机QQ扫一扫",
+      "scanned": "已扫码，请在手机QQ中确认",
+      "qrLabel": "QQ 音乐手机QQ登录二维码"
+    }
+  },
+  "favorites_playlist_id": "liked"
+}

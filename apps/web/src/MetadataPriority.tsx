@@ -1,0 +1,8 @@
+import {useEffect,useState} from "react";
+import type {RMusicClient} from "@r-music/sdk";
+export function MetadataPriority({api}:{api:RMusicClient}){
+ const[order,setOrder]=useState<string[]>([]),[providers,setProviders]=useState<{id:string;name:string}[]>([]),[error,setError]=useState(""),[busy,setBusy]=useState(false),[saved,setSaved]=useState(false);
+ useEffect(()=>{const abort=new AbortController();api.request<{metadata_provider_priority:string[];metadata_providers:{id:string;name:string}[]}>("/settings",{signal:abort.signal}).then(v=>{if(!abort.signal.aborted){setOrder(v.metadata_provider_priority||[]);setProviders(v.metadata_providers||[]);}}).catch(e=>{if(!abort.signal.aborted)setError(e.message);});return()=>abort.abort();},[api]);
+ const move=(index:number,delta:number)=>{setOrder(old=>{const copy=[...old];[copy[index],copy[index+delta]]=[copy[index+delta],copy[index]];return copy;});setSaved(false);};
+ return <section className="settings-section metadata-priority"><h2>平台资料优先级</h2><p className="muted">优先采用排在前面的平台；缺失字段由身份已确认的其他平台补全。</p>{order.map((id,index)=><div className="metadata-priority-row" key={id}><small>{index+1}</small><strong>{providers.find(p=>p.id===id)?.name||id}</strong><button aria-label={`提高 ${id} 优先级`} disabled={index===0||busy} onClick={()=>move(index,-1)}>↑</button><button aria-label={`降低 ${id} 优先级`} disabled={index===order.length-1||busy} onClick={()=>move(index,1)}>↓</button></div>)}{error&&<p role="alert">{error}</p>}<button disabled={busy} onClick={()=>{setBusy(true);setError("");void api.request("/settings",{method:"PATCH",body:JSON.stringify({metadata_provider_priority:order})}).then(()=>setSaved(true)).catch(e=>setError(e.message)).finally(()=>setBusy(false));}}>{saved?"已保存":"保存优先级"}</button></section>;
+}

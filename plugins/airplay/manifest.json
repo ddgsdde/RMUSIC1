@@ -1,0 +1,13 @@
+{
+  "id": "airplay",
+  "name": "AirPlay 输出适配器",
+  "version": "0.1.0",
+  "api_version": "1",
+  "runtime": "python>=3.12",
+  "entrypoint": "adapter.py",
+  "license": "MIT",
+  "upstream": "https://github.com/postlund/pyatv",
+  "capabilities": ["discovery", "pairing", "stream_file", "volume", "position", "restart_seek"],
+  "strict_sync": false,
+  "verified": false
+}

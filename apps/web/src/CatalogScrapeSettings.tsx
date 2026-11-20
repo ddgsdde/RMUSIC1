@@ -1,0 +1,9 @@
+import {useEffect,useRef,useState} from 'react';
+import type {RMusicClient} from '@r-music/sdk';
+import {errorMessage} from './errorRecovery';
+export function CatalogScrapeSettings({api}:{api:RMusicClient}){
+ const pending=useRef<AbortController|null>(null);useEffect(()=>()=>pending.current?.abort(),[api]);
+ const[draft,setDraft]=useState<{catalog_scrape_enabled:boolean;catalog_scrape_concurrency:number}|null>(null),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
+ useEffect(()=>{const c=new AbortController();api.request<{catalog_scrape_enabled?:boolean;catalog_scrape_concurrency?:number}>('/settings',{signal:c.signal}).then(v=>{if(!c.signal.aborted)setDraft({catalog_scrape_enabled:v.catalog_scrape_enabled??false,catalog_scrape_concurrency:v.catalog_scrape_concurrency??1});}).catch(e=>{if(!c.signal.aborted)setMessage(errorMessage(e));});return()=>c.abort();},[api]);
+ return <section className="settings-section"><h2>专辑与艺术家资料刮削</h2><p className="fine-print">默认关闭、单并发；遵守平台限流，不下载音频。空闲时定期检查已有曲库的资料，内容未变时保留原记录。</p>{draft&&<form className="catalog-scrape-form" onSubmit={e=>{e.preventDefault();pending.current?.abort();const c=new AbortController();pending.current=c;setBusy(true);void api.request('/settings',{method:'PATCH',body:JSON.stringify(draft),signal:c.signal}).then(()=>{if(!c.signal.aborted)setMessage('设置已保存');}).catch(e=>{if(!c.signal.aborted)setMessage(errorMessage(e));}).finally(()=>{if(!c.signal.aborted)setBusy(false);});}}><label className="scrape-toggle"><input type="checkbox" checked={draft.catalog_scrape_enabled} onChange={e=>setDraft({...draft,catalog_scrape_enabled:e.target.checked})}/>后台刮削</label><label className="scrape-concurrency">并发<input type="number" min="1" max="4" value={draft.catalog_scrape_concurrency} onChange={e=>setDraft({...draft,catalog_scrape_concurrency:Number(e.target.value)})}/></label><button disabled={busy}>保存刮削设置</button></form>}{message&&<p role="status">{message}</p>}</section>;
+}

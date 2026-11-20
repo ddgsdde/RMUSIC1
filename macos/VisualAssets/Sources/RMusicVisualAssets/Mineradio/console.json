@@ -1,0 +1,703 @@
+[
+  {
+    "id": "depth",
+    "tab": "动效",
+    "group": "基础画面",
+    "label": "画面景深",
+    "kind": "range",
+    "number": 0.2,
+    "minimum": 0.2,
+    "maximum": 1.8,
+    "step": 0.01
+  },
+  {
+    "id": "cinemaShake",
+    "tab": "动效",
+    "group": "基础画面",
+    "label": "电影镜头",
+    "kind": "range",
+    "number": 0.5,
+    "minimum": 0.0,
+    "maximum": 1.8,
+    "step": 0.01
+  },
+  {
+    "id": "cinema",
+    "tab": "动效",
+    "group": "基础画面",
+    "label": "电影镜头开关",
+    "kind": "toggle",
+    "flag": true
+  },
+  {
+    "id": "point",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "粒子尺寸",
+    "kind": "range",
+    "number": 1,
+    "minimum": 0.5,
+    "maximum": 2.2,
+    "step": 0.01
+  },
+  {
+    "id": "speed",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "运动速度",
+    "kind": "range",
+    "number": 1,
+    "minimum": 0.2,
+    "maximum": 2.5,
+    "step": 0.01
+  },
+  {
+    "id": "twist",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "粒子扭曲",
+    "kind": "range",
+    "number": 0,
+    "minimum": 0.0,
+    "maximum": 0.6,
+    "step": 0.01
+  },
+  {
+    "id": "color",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "色彩张力",
+    "kind": "range",
+    "number": 1.1,
+    "minimum": 0.5,
+    "maximum": 2.0,
+    "step": 0.01
+  },
+  {
+    "id": "bloomStrength",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "光晕强度",
+    "kind": "range",
+    "number": 0.62,
+    "minimum": 0.0,
+    "maximum": 1.6,
+    "step": 0.01
+  },
+  {
+    "id": "scatter",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "离散感",
+    "kind": "range",
+    "number": 0,
+    "minimum": 0.0,
+    "maximum": 0.5,
+    "step": 0.01
+  },
+  {
+    "id": "bgFade",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "背景压暗",
+    "kind": "range",
+    "number": 0.2,
+    "minimum": 0.0,
+    "maximum": 1.2,
+    "step": 0.01
+  },
+  {
+    "id": "bloom",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "粒子溢光",
+    "kind": "toggle",
+    "flag": false
+  },
+  {
+    "id": "edge",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "轮廓高亮",
+    "kind": "toggle",
+    "flag": false
+  },
+  {
+    "id": "backgroundStarRiver",
+    "tab": "动效",
+    "group": "粒子与光影",
+    "label": "背景星河",
+    "kind": "toggle",
+    "flag": true
+  },
+  {
+    "id": "lyricCustomLineCount",
+    "tab": "歌词",
+    "group": "显示与翻译",
+    "label": "显示行数",
+    "kind": "range",
+    "number": 10,
+    "minimum": 1.0,
+    "maximum": 10.0,
+    "step": 1.0
+  },
+  {
+    "id": "lyricTranslationGap",
+    "tab": "歌词",
+    "group": "显示与翻译",
+    "label": "译文间距",
+    "kind": "range",
+    "number": 0.92,
+    "minimum": 0.28,
+    "maximum": 2.2,
+    "step": 0.01
+  },
+  {
+    "id": "lyricTranslationScale",
+    "tab": "歌词",
+    "group": "显示与翻译",
+    "label": "译文字号",
+    "kind": "range",
+    "number": 0.65,
+    "minimum": 0.46,
+    "maximum": 1.12,
+    "step": 0.01
+  },
+  {
+    "id": "lyricTranslationOpacity",
+    "tab": "歌词",
+    "group": "显示与翻译",
+    "label": "译文透明",
+    "kind": "range",
+    "number": 0.86,
+    "minimum": 0.2,
+    "maximum": 1.0,
+    "step": 0.01
+  },
+  {
+    "id": "lyricDisplayMode",
+    "tab": "歌词",
+    "group": "显示与翻译",
+    "label": "歌词行数",
+    "kind": "choice",
+    "text": "cinema",
+    "choices": [
+      {
+        "id": "single",
+        "label": "单行"
+      },
+      {
+        "id": "dual",
+        "label": "双行"
+      },
+      {
+        "id": "triple",
+        "label": "三行"
+      },
+      {
+        "id": "cinema",
+        "label": "沉浸"
+      },
+      {
+        "id": "custom",
+        "label": "自定义"
+      }
+    ]
+  },
+  {
+    "id": "lyricTranslationMode",
+    "tab": "歌词",
+    "group": "显示与翻译",
+    "label": "双语翻译",
+    "kind": "choice",
+    "text": "multi",
+    "choices": [
+      {
+        "id": "off",
+        "label": "关闭"
+      },
+      {
+        "id": "current",
+        "label": "当前行"
+      },
+      {
+        "id": "multi",
+        "label": "多行"
+      }
+    ]
+  },
+  {
+    "id": "lyricLetterSpacing",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "字间距",
+    "kind": "range",
+    "number": 0,
+    "minimum": -0.04,
+    "maximum": 0.18,
+    "step": 0.005
+  },
+  {
+    "id": "lyricLineHeight",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "行距",
+    "kind": "range",
+    "number": 1,
+    "minimum": 0.72,
+    "maximum": 1.8,
+    "step": 0.01
+  },
+  {
+    "id": "lyricWeight",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "字重",
+    "kind": "range",
+    "number": 750,
+    "minimum": 500.0,
+    "maximum": 900.0,
+    "step": 50.0
+  },
+  {
+    "id": "lyricScale",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "歌词大小",
+    "kind": "range",
+    "number": 1,
+    "minimum": 0.35,
+    "maximum": 1.65,
+    "step": 0.01
+  },
+  {
+    "id": "lyricOffsetX",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "左右位置",
+    "kind": "range",
+    "number": 0,
+    "minimum": -4.0,
+    "maximum": 4.0,
+    "step": 0.01
+  },
+  {
+    "id": "lyricOffsetY",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "上下位置",
+    "kind": "range",
+    "number": 0,
+    "minimum": -2.4,
+    "maximum": 2.7,
+    "step": 0.01
+  },
+  {
+    "id": "lyricOffsetZ",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "前后景深",
+    "kind": "range",
+    "number": 0,
+    "minimum": -3.2,
+    "maximum": 3.2,
+    "step": 0.01
+  },
+  {
+    "id": "lyricTiltX",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "上下旋转",
+    "kind": "range",
+    "number": 0,
+    "minimum": -84.0,
+    "maximum": 84.0,
+    "step": 1.0
+  },
+  {
+    "id": "lyricTiltY",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "左右旋转",
+    "kind": "range",
+    "number": 0,
+    "minimum": -84.0,
+    "maximum": 84.0,
+    "step": 1.0
+  },
+  {
+    "id": "lyricFont",
+    "tab": "歌词",
+    "group": "字体与排版",
+    "label": "歌词字体",
+    "kind": "choice",
+    "text": "sans",
+    "choices": [
+      {
+        "id": "sans",
+        "label": "黑体"
+      },
+      {
+        "id": "song",
+        "label": "宋体"
+      },
+      {
+        "id": "mono",
+        "label": "等宽"
+      }
+    ]
+  },
+  {
+    "id": "lyricGlowStrength",
+    "tab": "歌词",
+    "group": "颜色与光效",
+    "label": "溢光强度",
+    "kind": "range",
+    "number": 0.28,
+    "minimum": 0.0,
+    "maximum": 0.85,
+    "step": 0.01
+  },
+  {
+    "id": "lyricBackgroundAdapt",
+    "tab": "歌词",
+    "group": "颜色与光效",
+    "label": "亮底避光",
+    "kind": "range",
+    "number": 0.72,
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "step": 0.01
+  },
+  {
+    "id": "lyricGlow",
+    "tab": "歌词",
+    "group": "颜色与光效",
+    "label": "歌词溢光",
+    "kind": "toggle",
+    "flag": true
+  },
+  {
+    "id": "lyricGlowBeat",
+    "tab": "歌词",
+    "group": "颜色与光效",
+    "label": "鼓点溢光",
+    "kind": "toggle",
+    "flag": true
+  },
+  {
+    "id": "lyricGlowParticles",
+    "tab": "歌词",
+    "group": "颜色与光效",
+    "label": "歌词光粒",
+    "kind": "toggle",
+    "flag": false
+  },
+  {
+    "id": "lyricContextOpacity",
+    "tab": "歌词",
+    "group": "歌词动画",
+    "label": "上下句清晰",
+    "kind": "range",
+    "number": 0.54,
+    "minimum": 0.25,
+    "maximum": 1.0,
+    "step": 0.01
+  },
+  {
+    "id": "lyricContextSpread",
+    "tab": "歌词",
+    "group": "歌词动画",
+    "label": "上下句间距",
+    "kind": "range",
+    "number": 1.96,
+    "minimum": 0.6,
+    "maximum": 2.4,
+    "step": 0.01
+  },
+  {
+    "id": "lyricEdgeFade",
+    "tab": "歌词",
+    "group": "歌词动画",
+    "label": "边缘渐隐",
+    "kind": "range",
+    "number": 0.32,
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "step": 0.01
+  },
+  {
+    "id": "lyricMotionSoftness",
+    "tab": "歌词",
+    "group": "歌词动画",
+    "label": "动画柔顺",
+    "kind": "range",
+    "number": 0.72,
+    "minimum": 0.15,
+    "maximum": 1.2,
+    "step": 0.01
+  },
+  {
+    "id": "lyricVerticalFloat",
+    "tab": "歌词",
+    "group": "歌词动画",
+    "label": "歌词上下浮动",
+    "kind": "toggle",
+    "flag": true
+  },
+  {
+    "id": "lyricCameraLock",
+    "tab": "歌词",
+    "group": "歌词动画",
+    "label": "歌词镜头绑定",
+    "kind": "toggle",
+    "flag": false
+  },
+  {
+    "id": "lyricPauseHold",
+    "tab": "歌词",
+    "group": "歌词动画",
+    "label": "暂停保留歌词",
+    "kind": "toggle",
+    "flag": true
+  },
+  {
+    "id": "lyricMotionStyle",
+    "tab": "歌词",
+    "group": "歌词动画",
+    "label": "歌词动画",
+    "kind": "choice",
+    "text": "float",
+    "choices": [
+      {
+        "id": "float",
+        "label": "漂浮"
+      },
+      {
+        "id": "smooth",
+        "label": "柔滑"
+      },
+      {
+        "id": "glass",
+        "label": "玻璃"
+      },
+      {
+        "id": "shine",
+        "label": "线光"
+      },
+      {
+        "id": "glitch",
+        "label": "故障"
+      }
+    ]
+  },
+  {
+    "id": "shelfSize",
+    "tab": "歌单架",
+    "group": "外观与位置",
+    "label": "歌单架大小",
+    "kind": "range",
+    "number": 0.92,
+    "minimum": 0.65,
+    "maximum": 1.45,
+    "step": 0.01
+  },
+  {
+    "id": "shelfOffsetX",
+    "tab": "歌单架",
+    "group": "外观与位置",
+    "label": "左右位置",
+    "kind": "range",
+    "number": -0.34,
+    "minimum": -1.2,
+    "maximum": 1.2,
+    "step": 0.01
+  },
+  {
+    "id": "shelfOffsetY",
+    "tab": "歌单架",
+    "group": "外观与位置",
+    "label": "上下位置",
+    "kind": "range",
+    "number": -0.2,
+    "minimum": -0.9,
+    "maximum": 0.9,
+    "step": 0.01
+  },
+  {
+    "id": "shelfOffsetZ",
+    "tab": "歌单架",
+    "group": "外观与位置",
+    "label": "前后景深",
+    "kind": "range",
+    "number": 0.12,
+    "minimum": -0.9,
+    "maximum": 0.9,
+    "step": 0.01
+  },
+  {
+    "id": "shelfAngleY",
+    "tab": "歌单架",
+    "group": "外观与位置",
+    "label": "侧向角度",
+    "kind": "range",
+    "number": -11,
+    "minimum": -30.0,
+    "maximum": 30.0,
+    "step": 1.0
+  },
+  {
+    "id": "shelfOpacity",
+    "tab": "歌单架",
+    "group": "外观与位置",
+    "label": "整体透明度",
+    "kind": "range",
+    "number": 1,
+    "minimum": 0.25,
+    "maximum": 1.0,
+    "step": 0.01
+  },
+  {
+    "id": "shelfBgOpacity",
+    "tab": "歌单架",
+    "group": "外观与位置",
+    "label": "背景透明度",
+    "kind": "range",
+    "number": 0.79,
+    "minimum": 0.25,
+    "maximum": 0.98,
+    "step": 0.01
+  },
+  {
+    "id": "shelfCameraMode",
+    "tab": "歌单架",
+    "group": "显示方式",
+    "label": "镜头",
+    "kind": "choice",
+    "text": "dynamic",
+    "choices": [
+      {
+        "id": "dynamic",
+        "label": "动态"
+      },
+      {
+        "id": "static",
+        "label": "静态"
+      }
+    ]
+  },
+  {
+    "id": "sonicGroundAmplitude",
+    "tab": "动效",
+    "group": "音域地形",
+    "label": "地面起伏",
+    "kind": "range",
+    "number": 50,
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "step": 1.0
+  },
+  {
+    "id": "sonicGroundMotionSpeed",
+    "tab": "动效",
+    "group": "音域地形",
+    "label": "起伏速度",
+    "kind": "range",
+    "number": 50,
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "step": 1.0
+  },
+  {
+    "id": "sonicGroundRange",
+    "tab": "动效",
+    "group": "音域地形",
+    "label": "地面范围",
+    "kind": "range",
+    "number": 82,
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "step": 1.0
+  },
+  {
+    "id": "sonicGroundLower",
+    "tab": "动效",
+    "group": "音域地形",
+    "label": "歌词避让",
+    "kind": "range",
+    "number": 68,
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "step": 1.0
+  },
+  {
+    "id": "sonicGroundDepth",
+    "tab": "动效",
+    "group": "音域地形",
+    "label": "地面远近",
+    "kind": "range",
+    "number": 62,
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "step": 1.0
+  },
+  {
+    "id": "sonicGroundAutoRotate",
+    "tab": "动效",
+    "group": "音域地形",
+    "label": "地形自转",
+    "kind": "range",
+    "number": 50,
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "step": 1.0
+  },
+  {
+    "id": "sonicGroundGlow",
+    "tab": "动效",
+    "group": "音域地形",
+    "label": "音域光强",
+    "kind": "range",
+    "number": 20,
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "step": 1.0
+  },
+  {
+    "id": "sonicGroundGlints",
+    "tab": "动效",
+    "group": "音域地形",
+    "label": "闪光强度",
+    "kind": "range",
+    "number": 22,
+    "minimum": 0,
+    "maximum": 100,
+    "step": 1
+  },
+  {
+    "id": "visualTintMode",
+    "tab": "界面",
+    "group": "视觉配色",
+    "label": "视觉主色",
+    "kind": "choice",
+    "text": "auto",
+    "choices": [
+      {
+        "id": "auto",
+        "label": "封面取色"
+      },
+      {
+        "id": "custom",
+        "label": "自定义"
+      }
+    ]
+  },
+  {
+    "id": "visualTintColor",
+    "tab": "界面",
+    "group": "视觉配色",
+    "label": "自定义颜色",
+    "kind": "color",
+    "text": "#9db8cf"
+  }
+]

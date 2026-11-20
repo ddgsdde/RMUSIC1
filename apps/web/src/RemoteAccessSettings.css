@@ -1,0 +1,21 @@
+.remote-access-settings {max-width:1060px;min-width:0}
+.remote-access-settings .section-heading h2 {margin:0}
+.remote-mode-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:24px 0}
+.remote-mode-grid button {text-align:left;padding:18px;border-radius:16px;min-width:0;background:var(--panel,var(--surface));transition:border-color .2s,background .2s,transform .2s}
+.remote-mode-grid button.selected {border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.remote-mode-grid button span {display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:600}
+.remote-mode-grid button small {display:block;color:var(--muted);line-height:1.6;margin-top:8px}
+.remote-access-settings label {display:flex;flex-direction:column;gap:9px;margin:16px 0;min-width:0}
+.remote-form-grid,.remote-port-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}
+.remote-port-grid {grid-template-columns:repeat(auto-fit,minmax(165px,1fr))}
+.remote-form-grid input,.remote-form-grid select,.remote-port-grid input {width:100%;min-width:0;box-sizing:border-box}
+.remote-access-settings .remote-check {flex-direction:row;align-items:center;gap:10px;line-height:1.6}
+.remote-detail {border-top:1px solid var(--border);padding:20px 0}
+.remote-detail summary {cursor:pointer;font-weight:600;line-height:1.6}
+.remote-detail p {font-size:12px;line-height:1.8}
+.remote-access-settings form>.primary {margin-top:24px}
+@media(max-width:600px){.remote-form-grid {grid-template-columns:1fr}.remote-mode-grid {grid-template-columns:1fr}.remote-port-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}}
+@media(prefers-reduced-motion:reduce){.remote-mode-grid button {transition:none}}
+.remote-access-settings h2 {display:flex;align-items:center;gap:10px}
+.remote-access-settings textarea {width:100%;resize:vertical;line-height:1.55}
+.remote-detail li {overflow-wrap:anywhere}

@@ -1,0 +1,7 @@
+.connection-quality{display:grid;gap:.65rem;padding:.9rem 1rem;margin:.5rem 0 1rem;border:1px solid var(--line,currentColor);border-radius:14px;color:var(--text);min-width:0}
+.quality-line,.quality-actions,.quality-line span,.quality-actions small{display:flex;align-items:center;gap:.5rem}
+.quality-line,.quality-actions{justify-content:space-between;flex-wrap:wrap}
+.quality-latency{font-variant-numeric:tabular-nums;font-weight:600}
+.quality-address,.quality-actions small{color:var(--muted);font-size:.82rem;overflow-wrap:anywhere}
+.quality-actions button{transition:background-color .16s ease}
+@media(prefers-reduced-motion:reduce){.quality-actions button{transition:none}}

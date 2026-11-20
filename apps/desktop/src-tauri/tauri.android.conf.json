@@ -1,0 +1,9 @@
+{
+  "identifier": "com.rmusic.android.development",
+  "bundle": {
+    "android": {
+      "minSdkVersion": 26,
+      "versionCode": 1
+    }
+  }
+}

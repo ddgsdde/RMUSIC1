@@ -1,0 +1,502 @@
+:root:not([data-native-android]) {
+  --record-tint: color-mix(in srgb,var(--accent) 10%,var(--bg));
+  --record-feature: color-mix(in srgb,var(--accent) 8%,var(--surface));
+  --record-shelf: color-mix(in srgb,var(--bg) 65%,var(--raised));
+  --record-radius: clamp(0px,calc(var(--skin-radius) * .7),16px);
+}
+:root[data-theme=press][data-mode=light]:not([data-native-android]) { --record-feature:#f0e5db; }
+:where(:root:not([data-native-android])) .record-mark { color:var(--accent); flex:none; }
+:where(:root:not([data-native-android])) .studio-brand b,:where(:root:not([data-native-android])) .studio-poster-type span { font:750 17px/1 system-ui,sans-serif; letter-spacing:.12em; }
+:where(:root:not([data-native-android])) .record-kicker { display:flex; align-items:center; gap:8px; color:var(--accent); font-size:11px; font-weight:690; letter-spacing:.14em; }
+:where(:root:not([data-native-android])) .record-kicker > i { width:19px; height:1px; background:currentColor; flex:none; }
+
+:where(:root:not([data-native-android])) .studio-app.app-shell:not(.mobile-app) {
+  --sidebar:clamp(164px,14.2vw,205px);
+  --topbar:66px;
+  --transport:92px;
+  --queue:clamp(255px,22.4vw,340px);
+  --studio-space:clamp(22px,2.43vw,36px);
+  padding:var(--topbar) 0 var(--transport) var(--sidebar);
+}
+:where(:root:not([data-native-android])) .record-rail {
+  position:fixed; inset:0 auto var(--transport) 0; width:var(--sidebar); z-index:31;
+  display:flex; flex-direction:column; padding:24px 16px 20px; border-right:1px solid var(--border); background:var(--raised);
+}
+:where(:root:not([data-native-android])) .record-rail > .studio-brand { padding:8px 13px; justify-content:flex-start; min-height:40px; margin-bottom:clamp(12px,4.2vh,40px); flex:none; }
+:where(:root:not([data-native-android])) .record-rail nav { display:grid; gap:4px; min-height:0; overflow-y:auto; scrollbar-width:thin; }
+:where(:root:not([data-native-android])) .record-rail nav button,:where(:root:not([data-native-android])) .record-rail .record-core {
+  justify-content:flex-start; text-align:left; background:none; border:0; padding:10px 12px; gap:11px; color:var(--muted);
+}
+:where(:root:not([data-native-android])) .record-rail nav button { min-height:43px; border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .record-rail nav button:hover,:where(:root:not([data-native-android])) .record-output:hover { background:var(--surface); }
+:where(:root:not([data-native-android])) .record-rail nav button[aria-current=page] { color:var(--accent); background:var(--record-tint); font-weight:660; }
+:where(:root:not([data-native-android])) .record-rail nav button:nth-child(5) { margin-top:14px; }
+:where(:root:not([data-native-android])) .record-rail .record-core { flex:none; margin-top:auto; padding:14px 1px 0; border-top:1px solid var(--border); border-radius:0; }
+:where(:root:not([data-native-android])) .record-core > span { display:grid; width:34px; height:34px; place-items:center; border-radius:var(--record-radius); background:color-mix(in srgb,var(--text) 8%,var(--surface)); }
+:where(:root:not([data-native-android])) .record-core strong,:where(:root:not([data-native-android])) .record-core small { display:block; white-space:nowrap; font-size:12px; }
+:where(:root:not([data-native-android])) .record-core small { margin-top:2px; font-size:11px; }
+:where(:root:not([data-native-android])) .record-core i,:where(:root:not([data-native-android])) .record-player-quality i { display:inline-block; width:6px; height:6px; border-radius:50%; background:currentColor; margin-inline-end:5px; }
+:where(:root:not([data-native-android])) .record-core i[data-online=true] { background:#4e936f; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) > .studio-mast { left:var(--sidebar); }
+:where(:root:not([data-native-android])) .studio-mast .studio-search { width:min(100%,372px); border-radius:var(--record-radius); background:var(--raised); }
+:where(:root:not([data-native-android])) .studio-mast .studio-search input[type=search] { flex:1; width:0; }
+:where(:root:not([data-native-android])) .studio-search kbd { font:500 10px/1.4 system-ui,sans-serif; border:1px solid var(--border); border-radius:4px; padding:2px 4px; white-space:nowrap; }
+:where(:root:not([data-native-android])) .record-output {
+  display:flex; align-items:center; min-width:0; max-width:260px; background:transparent;
+  border:0; gap:7px; font-size:12px; padding:7px 9px; border-radius:var(--record-radius); color:var(--muted);
+}
+:where(:root:not([data-native-android])) .record-output span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) > .main-content { transition:none; }
+:where(:root:not([data-native-android])) .studio-app.with-queue:not(.mobile-app) > .main-content { width:calc(100% - var(--queue)); padding-right:var(--studio-space); }
+:where(:root:not([data-native-android])) .studio-app.player-route:not(.mobile-app) > .main-content { padding:0; }
+:where(:root:not([data-native-android])) .studio-app.player-route:not(.mobile-app) > .transport { display:grid; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) > .transport { padding-inline:24px; grid-template-columns:minmax(125px,1fr) minmax(230px,1.9fr) minmax(165px,1fr); }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .transport .seek-row { width:min(100%,545px); margin-inline:auto; }
+:where(:root:not([data-native-android])) .studio-app .transport .seek-row input[data-buffered] {
+  background:linear-gradient(90deg,var(--accent) 0 var(--progress),color-mix(in srgb,var(--muted) 45%,var(--border)) var(--progress) max(var(--progress),var(--buffered)),var(--border) max(var(--progress),var(--buffered)));
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .transport-zone { visibility:hidden; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .transport .now-playing-info .cover { border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .studio-app .transport .output-button { background:none; border:0; box-shadow:none; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) > .queue-panel {
+  width:var(--queue); inset:var(--topbar) 0 var(--transport) auto;
+  z-index:11; border-radius:0; box-shadow:none; background:var(--record-shelf); padding:26px 15px 16px;
+}
+:where(:root:not([data-native-android])) .queue-panel .queue-kicker { padding:0 6px; max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+:where(:root:not([data-native-android])) .queue-panel .queue-heading { margin:2px 0 1px; padding-left:6px; gap:5px; }
+:where(:root:not([data-native-android])) .queue-panel .queue-heading h2 { font-size:calc(25px * var(--type-scale)); margin:0 auto 0 0; line-height:1.15; letter-spacing:-.035em; }
+:where(:root:not([data-native-android])) .queue-panel .queue-summary { margin:0 0 12px 6px; color:var(--muted); font-size:12px; }
+:where(:root:not([data-native-android])) .queue-panel .zone-select { height:auto; min-height:32px; padding:0 6px; margin-bottom:9px; border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .queue-panel .zone-select svg { width:16px; height:16px; }
+:where(:root:not([data-native-android])) .queue-panel .zone-select select { min-width:0; max-width:100%; padding:5px 0; min-height:30px; font-size:12px; }
+:where(:root:not([data-native-android])) .queue-panel .queue-tracks { flex:0 1 auto; }
+:where(:root:not([data-native-android])) .queue-panel .queue-track {
+  border-radius:0; border-bottom:1px solid var(--border); min-height:54px; margin:0; padding:6px 4px; gap:6px;
+}
+:where(:root:not([data-native-android])) .queue-panel .queue-track.current { background:var(--record-tint); border-radius:var(--record-radius); border-color:transparent; }
+:where(:root:not([data-native-android])) .queue-panel .queue-play { gap:7px; }
+:where(:root:not([data-native-android])) .queue-panel .queue-play > .cover { width:34px; height:34px; border-radius:4px; }
+:where(:root:not([data-native-android])) .queue-panel .queue-play > div:not(.cover) { gap:2px; }
+:where(:root:not([data-native-android])) .queue-panel .queue-play > div > span { font-size:10px; }
+:where(:root:not([data-native-android])) .queue-panel .autoplay-settings { margin:14px 0 0; border-radius:var(--record-radius); background:transparent; }
+:where(:root:not([data-native-android])) .queue-panel .signal-link { margin-top:5px; background:transparent; border:0; border-radius:var(--record-radius); color:var(--muted); }
+:where(:root:not([data-native-android])) .record-queue-radio { position:relative; flex:none; }
+:where(:root:not([data-native-android])) .record-queue-radio .autoplay-settings summary { display:grid; grid-template-columns:24px 1fr; justify-items:start; align-items:center; gap:2px 6px; padding-right:48px; font-weight:640; }
+:where(:root:not([data-native-android])) .record-queue-radio .autoplay-settings summary svg { grid-row:1/3; color:var(--accent); }
+:where(:root:not([data-native-android])) .record-queue-radio .autoplay-settings summary small { grid-column:2; color:var(--muted); font-size:10px; font-weight:450; }
+:where(:root:not([data-native-android])) .record-queue-radio > input { position:absolute; top:22px; right:9px; }
+
+:where(:root:not([data-native-android])) .studio-app .studio-discover-title { margin:clamp(21px,3vh,30px) 0 20px; align-items:center; }
+:where(:root:not([data-native-android])) .studio-discover-title h1 { font-size:calc(clamp(36px,4vw,62px) * var(--type-scale)); font-weight:770; line-height:1.05; margin-top:7px; }
+:where(:root:not([data-native-android])) .studio-discover-title h1 > span { display:inline-block; width:.17em; height:.17em; margin-inline-start:.12em; border-radius:50%; background:var(--accent); }
+:where(:root:not([data-native-android])) .studio-discover-title p { margin:5px 0 0; color:var(--muted); font-size:13px; }
+:where(:root:not([data-native-android])) .studio-app .studio-discover-tools { margin:0 0 15px; gap:7px; flex-wrap:wrap; }
+:where(:root:not([data-native-android])) .studio-app .record-discover-tabs { min-width:0; border:0; border-radius:0; padding:0; gap:7px; background:transparent; flex-wrap:wrap; overflow:visible; }
+:where(:root:not([data-native-android])) .studio-app .record-discover-tabs button {
+  flex:none; border:1px solid var(--border); border-radius:var(--record-radius); font-size:12px; font-weight:580;
+  padding:5px 12px; min-height:33px; color:var(--muted); background:transparent;
+}
+:where(:root:not([data-native-android])) .studio-app .record-discover-tabs button[aria-pressed=true] { color:var(--accent); background:var(--record-tint); border-color:color-mix(in srgb,var(--accent) 20%,var(--border)); }
+:where(:root:not([data-native-android])) .record-platform-link,:where(:root:not([data-native-android])) .record-mobile-platform { background:none; border:0; color:var(--muted); white-space:nowrap; font-size:12px; }
+:where(:root:not([data-native-android])) .record-platform-link { margin-left:auto; padding:6px 2px 6px 8px; }
+:where(:root:not([data-native-android])) .record-mobile-output,:where(:root:not([data-native-android])) .record-mobile-platform { display:none; }
+:where(:root:not([data-native-android])) .studio-app .studio-feature,:where(:root:not([data-native-android])) .studio-app .studio-featured { margin-bottom:0; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck { background:var(--record-feature); min-height:clamp(246px,19vw,298px); }
+:where(:root:not([data-native-android])) .studio-app .studio-jacket { background:radial-gradient(ellipse at 64% 53%,color-mix(in srgb,var(--accent) 10%,var(--record-feature)),transparent 70%); }
+:where(:root:not([data-native-android])) .studio-app .studio-jacket::before,:where(:root:not([data-native-android])) .studio-app .studio-jacket::after { content:none; }
+:where(:root:not([data-native-android])) .studio-app .studio-groove {
+  width:min(82%,420px); transform:translateX(12%); background:none; box-shadow:none; border:1px solid color-mix(in srgb,var(--accent) 11%,transparent);
+}
+:where(:root:not([data-native-android])) .studio-app .studio-groove::before,:where(:root:not([data-native-android])) .studio-app .studio-groove::after { content:""; position:absolute; inset:8%; border:inherit; border-radius:50%; background:none; }
+:where(:root:not([data-native-android])) .studio-app .studio-groove::after { inset:17%; }
+:where(:root:not([data-native-android])) .studio-app .studio-groove > i { display:none; }
+:where(:root:not([data-native-android])) .studio-app .studio-art { width:min(53%,226px); transform:none; box-shadow:0 14px 30px #241b2635; }
+:where(:root:not([data-native-android])) .studio-art > button:not(.record-cover-menu) { width:100%; height:100%; padding:0; border:0; border-radius:0; background:none; }
+:where(:root:not([data-native-android])) .studio-app .studio-art > button .cover { border:0; border-radius:0; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck-info { position:relative; padding:clamp(21px,2.2vw,36px); }
+:where(:root:not([data-native-android])) .studio-app .studio-deck h2 { font-weight:740; line-height:1.13; margin:10px 0 7px; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck-info p { font-size:13px; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck-info .studio-feature-notes { margin-top:11px; display:grid; gap:3px; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck-actions { margin-top:17px; gap:7px; }
+:where(:root:not([data-native-android])) .studio-app .studio-play { border-radius:var(--record-radius); padding:8px 12px; min-height:39px; font-size:13px; }
+:where(:root:not([data-native-android])) .studio-app .studio-rubric { color:var(--accent); font-size:10px; }
+:where(:root:not([data-native-android])) .studio-app .studio-rubric small { color:var(--muted); font-size:10px; }
+:where(:root:not([data-native-android])) .studio-app .studio-detail { width:42px; height:40px; justify-content:center; border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) [data-deck=gallery] .studio-app .studio-art { transform:none; border:0; }
+:where(:root:not([data-native-android])) [data-deck=type] .studio-app .studio-art { transform:rotate(4deg); }
+:where(:root:not([data-native-android])) .studio-feature-album { display:none; }
+:where(:root:not([data-native-android])) .studio-app .record-recent { margin:11px 0 26px; }
+:where(:root:not([data-native-android])) .studio-app .record-recent .section-heading { padding:0; margin-bottom:10px; border:0; align-items:flex-end; }
+:where(:root:not([data-native-android])) .studio-app .record-recent h2 { margin:0; font-size:calc(22px * var(--type-scale)); }
+:where(:root:not([data-native-android])) .record-recent p { color:var(--muted); font-size:11px; margin:1px 0 0; }
+:where(:root:not([data-native-android])) .record-recent .text-button { font-size:12px; color:var(--muted); gap:5px; }
+:where(:root:not([data-native-android])) .record-albums { --album-shelf-gap:13px; --album-shelf-card:calc((100% - 5 * var(--album-shelf-gap)) / 6); display:grid; gap:var(--album-shelf-gap); }
+:where(:root:not([data-native-android])) .record-albums:not(.daily-albums) { grid-template-columns:repeat(6,minmax(0,1fr)); }
+:where(:root:not([data-native-android])) .record-album { display:block; min-width:0; padding:0; border:0; text-align:left; background:transparent; }
+:where(:root:not([data-native-android])) .record-album:hover:not(:disabled) { background:transparent; color:var(--accent); }
+:where(:root:not([data-native-android])) .record-album > .cover { width:100%; height:auto; aspect-ratio:1; border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .record-album > strong,:where(:root:not([data-native-android])) .record-album > small { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; overflow-wrap:anywhere; line-height:1.4; }
+:where(:root:not([data-native-android])) .record-album > strong { margin-top:5px; font-size:13px; }
+:where(:root:not([data-native-android])) .record-album > small { font-size:11px; color:var(--muted); }
+/* One track sizing rule applies to both the visible shelf and its overflow. */
+:where(:root:not([data-native-android])) .studio-app .radio-discover .recommendation-rail {
+  --rail-gap:14px;
+  grid-template-columns:none;
+  grid-auto-columns:max(128px,calc((100% - 5 * var(--rail-gap)) / 6));
+  gap:var(--rail-gap); overflow-x:auto; scroll-snap-type:x proximity;
+}
+:where(:root:not([data-native-android])) .studio-app .recommendation-rail .recommendation-album { display:block; scroll-snap-align:start; }
+:where(:root:not([data-native-android])) .radio-discover .discovery-section { padding:0; }
+
+:where(:root:not([data-native-android])) .studio-app .catalog-entity { padding:9px 0 20px; gap:13px; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-topline { display:grid; grid-template-columns:1fr auto 1fr; gap:7px; margin:0; color:var(--muted); font-size:12px; font-weight:620; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-back { justify-self:start; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-about-button { justify-self:end; grid-column:3; min-width:40px; justify-content:center; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-topline > span { grid-column:2; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-header { align-items:flex-end; gap:16px; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-header > .cover,:where(:root:not([data-native-android])) .catalog-entity .entity-portrait { border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .catalog-entity .entity-header h1 { font:740 calc(clamp(27px,3.2vw,47px) * var(--type-scale))/1.13 var(--display-font); margin:4px 0 7px; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-summary { margin:4px 0 0; }
+:where(:root:not([data-native-android])) .entity-hero-actions { display:flex; align-items:center; gap:7px; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-hero-actions button { border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .catalog-entity .entity-tabs { border-top:1px solid var(--border); padding-top:8px; }
+:where(:root:not([data-native-android])) .catalog-entity .entity-tabs > button { border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .catalog-entity .entity-track { min-height:50px; border-radius:0; border-bottom:1px solid var(--border); }
+:where(:root:not([data-native-android])) .catalog-entity .entity-track[aria-current=true] { border-radius:var(--record-radius); border-color:transparent; background:var(--record-tint); color:var(--accent); }
+:where(:root:not([data-native-android])) .catalog-entity .entity-track time { white-space:nowrap; }
+:where(:root:not([data-native-android])) .record-levels { display:flex; align-items:end; justify-content:center; width:15px; gap:2px; height:13px; color:var(--accent); }
+:where(:root:not([data-native-android])) .record-levels b { width:2px; height:6px; background:currentColor; border-radius:4px; }
+:where(:root:not([data-native-android])) .record-levels b:nth-child(2) { height:12px; }
+:where(:root:not([data-native-android])) .record-levels b:nth-child(3) { height:8px; }
+
+@property --record-scene-glow { syntax:"<color>"; inherits:true; initial-value:#39344a; }
+:where(:root:not([data-native-android])) .studio-app .listening-room.scene-player { background:var(--surface); }
+:where(:root:not([data-native-android])) .studio-app .listening-room.scene-player[data-atmosphere=true] {
+  background:
+    radial-gradient(ellipse at 5% 100%,color-mix(in srgb,var(--mobile-scene-top) 48%,transparent),transparent 72%),
+    radial-gradient(ellipse at 94% 108%,color-mix(in srgb,var(--record-scene-glow) 39%,transparent),transparent 66%),
+    linear-gradient(135deg,var(--surface) 36%,var(--record-player-wash,var(--raised)));
+  transition:--mobile-scene-top .38s var(--studio-ease),--record-scene-glow .38s var(--studio-ease);
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room[data-standard-player=true] { grid-template-rows:auto minmax(0,1fr); }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room[data-standard-player=true] .listening-footer { display:none; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room .scene-toolbar { min-height:60px; padding:8px clamp(12px,2.2vw,32px); }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room .listening-stage {
+  grid-template-columns:minmax(0,1fr) minmax(0,1.04fr); align-items:stretch; gap:clamp(18px,4.2vw,65px); padding:18px clamp(16px,3.15vw,48px); overflow:auto;
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room .listening-stage.lyrics-focus { grid-template-columns:minmax(0,.65fr) minmax(0,1.4fr); }
+:where(:root:not([data-native-android])) .studio-app .listening-room .listening-eyebrow { display:none; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .listening-cover { border-radius:var(--record-radius); max-width:380px; }
+:where(:root:not([data-native-android])) [data-art-shape=disc] .studio-app .listening-room.player-skin-silk .listening-cover,
+:where(:root:not([data-native-android])) .studio-app .listening-room.player-skin-midnight .listening-cover { border-radius:50%; }
+:where(:root:not([data-native-android])) [data-art-shape=soft] .studio-app .listening-room.player-skin-silk .listening-cover { border-radius:var(--skin-radius); }
+:where(:root:not([data-native-android])) .studio-app .listening-room .listening-caption { width:100%; }
+:where(:root:not([data-native-android])) .record-track-meta { display:flex; gap:8px; justify-content:space-between; align-items:center; }
+:where(:root:not([data-native-android])) .record-track-meta > div { flex:1; min-width:0; }
+:where(:root:not([data-native-android])) .record-track-meta .heart-button { flex:none; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .listening-caption h1 { font:740 calc(clamp(24px,2.35vw,37px) * var(--type-scale))/1.19 var(--display-font); white-space:normal; overflow-wrap:anywhere; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .listening-caption p { margin-top:3px; font-size:13px; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .listening-album { margin-top:2px; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .listening-lyrics { align-self:center; height:min(100%,600px); }
+ :where(:root:not([data-native-android])) .studio-app .listening-room .lyric-line {
+  opacity:.67; font-size:calc(var(--lyric-font,28px) * .89); line-height:1.3;
+}
+:where(:root:not([data-native-android])) .studio-app .listening-room .lyrics-scroll { gap:16px; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .lyric-line small { margin-top:4px; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .lyric-line.active { color:var(--text); opacity:1; font-weight:750; }
+:where(:root:not([data-native-android])) .studio-app .search-results > h1,:where(:root:not([data-native-android])) .studio-app .playlist-detail-heading h2,:where(:root:not([data-native-android])) .studio-app .mobile-profile-account h1,:where(:root:not([data-native-android])) .studio-app .mobile-core-page h1 {
+  font:730 calc(clamp(24px,3vw,40px) * var(--type-scale))/1.15 var(--display-font); letter-spacing:-.035em;
+}
+:where(:root:not([data-native-android])) .studio-app .search-results .source-tabs button,:where(:root:not([data-native-android])) .studio-app .search-best button,:where(:root:not([data-native-android])) .studio-app .audio-device,:where(:root:not([data-native-android])) .studio-app .audio-output {
+  border-radius:var(--record-radius);
+}
+:where(:root:not([data-native-android])) .studio-app .search-best button { background:var(--record-tint); }
+:where(:root:not([data-native-android])) .studio-app .playlist-row,:where(:root:not([data-native-android])) .studio-app .playlist-art,:where(:root:not([data-native-android])) .studio-app .mobile-profile-core { border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .studio-app .audio-device,:where(:root:not([data-native-android])) .studio-app .audio-output { box-shadow:none; }
+:where(:root:not([data-native-android])) .studio-app .library-home-tools button { background:none; color:var(--muted); border:0; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .lyric-line.active .timed-word {
+  background:linear-gradient(90deg,var(--accent) 0 var(--word-progress),var(--text) var(--word-progress) 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+:where(:root:not([data-native-android])) .record-player-quality { display:none; }
+
+@media(max-width:930px) {
+  :where(:root:not([data-native-android])) .studio-app.app-shell:not(.mobile-app) { --sidebar:62px; }
+  :where(:root:not([data-native-android])) .record-rail { padding-inline:8px; }
+  :where(:root:not([data-native-android])) .record-rail > .studio-brand,:where(:root:not([data-native-android])) .record-rail nav button,:where(:root:not([data-native-android])) .record-rail .record-core { justify-content:center; padding-inline:5px; }
+  :where(:root:not([data-native-android])) .record-rail .studio-brand b,:where(:root:not([data-native-android])) .record-rail nav button > span,:where(:root:not([data-native-android])) .record-rail .record-core > div { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+}
+@media(max-width:700px),(pointer:coarse) and (max-width:1100px),(pointer:coarse) and (max-height:600px) {
+  :where(:root:not([data-native-android])) .studio-app.mobile-app {
+    --studio-space:clamp(13px,4.35vw,24px); --studio-dock:calc(54px + env(safe-area-inset-bottom,0px)); --transport:calc(var(--studio-dock) + 53px);
+  }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app > .main-content { padding-top:6px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-page-title.studio-discover-title { margin:9px 0 11px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-discover-title h1 { font-size:calc(36px * var(--type-scale)); line-height:1.02; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-discover-title p { display:none; }
+  :where(:root:not([data-native-android])) .record-mobile-output {
+    display:grid; place-items:center; width:40px; height:40px; border-radius:50%; border:1px solid var(--border); padding:0; margin-top:6px; color:var(--muted);
+  }
+  :where(:root:not([data-native-android])) .studio-app .studio-discover-tools { margin-bottom:10px; gap:3px; }
+  :where(:root:not([data-native-android])) .studio-app .record-discover-tabs { flex:1; gap:5px; }
+  :where(:root:not([data-native-android])) .studio-app .record-discover-tabs button { padding:5px 7px; font-size:11px; min-height:31px; }
+  :where(:root:not([data-native-android])) .studio-app .record-platform-link { display:none; }
+  :where(:root:not([data-native-android])) .mobile-interface-option .interface-preview { background:var(--record-tint); border:1px solid var(--border); }
+  :where(:root:not([data-native-android])) .mobile-interface-option .interface-preview > i,:where(:root:not([data-native-android])) .mobile-interface-option .interface-preview > small b { background:var(--accent); }
+  :where(:root:not([data-native-android])) .mobile-interface-option .interface-preview > span b,:where(:root:not([data-native-android])) .mobile-interface-option .interface-preview > em { background:var(--raised); border-color:var(--border); }
+  :where(:root:not([data-native-android])) .mobile-interface-option .interface-studio > span { background:#343454; padding:7px; border-radius:4px; justify-content:center; }
+  :where(:root:not([data-native-android])) .mobile-interface-option .interface-studio > span b { background:#aaa4c0; }
+  :where(:root:not([data-native-android])) .mobile-interface-option .interface-studio > span b + b { display:none; }
+  :where(:root:not([data-native-android])) .studio-app .record-platform-link[aria-pressed=true] { display:flex; }
+  :where(:root:not([data-native-android])) .record-mobile-platform {
+    display:flex; width:100%; justify-content:space-between; padding:8px 0; border-top:1px solid var(--border); border-radius:0; margin:10px 0;
+  }
+  :where(:root:not([data-native-android])) .studio-app .studio-discover-tools .studio-tool { width:31px; height:33px; min-height:33px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app[data-mobile-style=studio] .studio-deck {
+    grid-template-columns:minmax(78px,.8fr) minmax(0,1.25fr); grid-template-rows:auto; align-items:center;
+    min-height:0; gap:14px; padding:13px;
+  }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app[data-mobile-style=studio] .studio-deck .studio-jacket {
+    grid-area:1/1; width:100%; height:auto; min-height:0; aspect-ratio:1; background:none; overflow:visible;
+  }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app[data-mobile-style=studio] .studio-art {
+    position:relative; inset:auto; width:100%; height:auto; max-width:none; aspect-ratio:1; transform:none; border:0; border-radius:6px;
+  }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app[data-mobile-style=studio] .studio-deck .studio-deck-info { grid-area:1/2; padding:0; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-deck-info h2 { font-size:calc(25px * var(--type-scale)); margin:5px 0 2px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-feature-notes,:where(:root:not([data-native-android])) .studio-app.mobile-app .studio-groove { display:none; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-rubric { font-size:9px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-rubric i { width:13px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-deck-info p { font-size:11px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-deck-actions { margin-top:7px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-deck-actions .studio-play { font-size:11px; min-height:30px; padding:4px 8px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-deck-actions .studio-detail { display:none; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-deck-dots { padding:0; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .studio-deck-dots button { min-height:22px; padding:6px 5px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .record-recent { margin:10px 0 12px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .record-recent h2 { font-size:calc(18px * var(--type-scale)); }
+  :where(:root:not([data-native-android])) .record-recent p { display:none; }
+  :where(:root:not([data-native-android])) .record-albums { --album-shelf-gap:8px; --album-shelf-card:calc((100% - 2 * var(--album-shelf-gap)) / 3); grid-auto-flow:column; grid-auto-columns:var(--album-shelf-card); overflow:auto; scrollbar-width:none; scroll-snap-type:x proximity; }
+  :where(:root:not([data-native-android])) .record-albums:not(.daily-albums) { grid-template-columns:none; }
+  :where(:root:not([data-native-android])) .record-album { scroll-snap-align:start; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .radio-discover .recommendation-rail {
+    --rail-gap:8px;
+    grid-auto-columns:calc((100% - 2 * var(--rail-gap)) / 3);
+  }
+  :where(:root:not([data-native-android])) .record-album > strong { font-size:12px; }
+  :where(:root:not([data-native-android])) .record-album > small { font-size:10px; }
+
+  :where(:root:not([data-native-android])) .studio-app.mobile-app > .studio-dock { background:var(--surface); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app > .transport:not([data-empty=true]) {
+    bottom:var(--studio-dock); height:51px; padding:4px 6px; border:0; box-shadow:none;
+    border-radius:var(--record-radius); grid-template-columns:minmax(0,1fr) auto; background:var(--raised);
+  }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .transport .now-playing-info > .cover { width:38px; height:38px; border-radius:4px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .transport .transport-center { width:auto; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .transport .transport-controls > .icon-button.next-control { display:flex; width:38px; height:40px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .transport .transport-output { display:none; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .transport .play-button { width:40px; height:40px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .transport .play-button svg { width:20px; height:20px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .queue-panel { padding:14px 14px max(12px,env(safe-area-inset-bottom,0px)); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .catalog-entity { gap:9px; padding-top:0; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .mobile-search-browse button {
+    background:var(--record-tint); border:1px solid var(--border); color:var(--text); border-radius:var(--record-radius); min-height:72px;
+  }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .mobile-search-browse button svg { color:var(--accent); opacity:.72; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .mobile-profile-group h2 { color:var(--accent); letter-spacing:.06em; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .mobile-profile-links > button { min-height:46px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .catalog-entity .entity-header > .cover,:where(:root:not([data-native-android])) .studio-app.mobile-app .catalog-entity .entity-portrait { width:clamp(98px,31vw,135px); height:auto; aspect-ratio:1; flex-basis:clamp(98px,31vw,135px); }
+  :where(:root:not([data-native-android])) .catalog-entity .entity-back span,:where(:root:not([data-native-android])) .catalog-entity[data-entity=album] .entity-track > .cover,:where(:root:not([data-native-android])) .catalog-entity .entity-track time small { display:none; }
+  :where(:root:not([data-native-android])) .catalog-entity .entity-hero-actions > .entity-start { flex:1; }
+  :where(:root:not([data-native-android])) .catalog-entity .entity-track { min-height:49px; padding-block:4px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .catalog-entity[data-entity=album] .entity-track {
+    grid-template-columns:25px minmax(0,1fr) 38px 37px; gap:5px; padding-inline:6px;
+  }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .catalog-entity[data-entity=album] .entity-eyebrow { display:block; margin-bottom:3px; }
+  :where(:root:not([data-native-android])) .catalog-entity .entity-track > time { text-align:right; }
+  :where(:root:not([data-native-android])) .catalog-entity .entity-track > button:last-child { padding:0; border:0; background:transparent; min-height:38px; }
+  :where(:root:not([data-native-android])) .catalog-entity .entity-track-title > button { display:block; text-overflow:ellipsis; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .catalog-entity .section-heading { margin-bottom:4px; padding-bottom:5px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .catalog-entity .section-heading h2 { font-size:14px; }
+
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .record-player-heading { display:grid; min-width:0; text-align:center; }
+  :where(:root:not([data-native-android])) .record-player-heading > div { grid-area:1/1; min-width:0; }
+  :where(:root:not([data-native-android])) .record-player-cover-title { display:grid; gap:1px; justify-items:center; align-content:center; transition:opacity var(--lyric-motion),transform var(--lyric-motion),visibility var(--lyric-motion); }
+  :where(:root:not([data-native-android])) .record-player-cover-title[aria-hidden=true] { opacity:0; visibility:hidden; transform:translateY(-4px); }
+  :where(:root:not([data-native-android])) .record-player-cover-title strong { font-size:13px; }
+  :where(:root:not([data-native-android])) .record-player-cover-title button { min-width:0; max-width:100%; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--muted); font-size:10px; padding:1px 0; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room[data-android-lyrics] .listening-stage { padding:4px clamp(15px,5.7vw,29px) 7px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room[data-android-lyrics] .listening-artwork { justify-content:flex-start; transform:none; gap:clamp(9px,2vh,17px); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room[data-android-lyrics=true] .listening-artwork { transform:translateY(-10px); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room[data-android-lyrics] .listening-cover { width:min(79vw,310px,max(102px,calc(100dvh - 385px))); max-height:none; flex-shrink:0; align-self:center; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room[data-android-lyrics] .listening-caption,:where(:root:not([data-native-android])) .studio-app .lyric-preview-lines { text-align:left; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .listening-album { display:none; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .listening-lyric-preview { justify-self:stretch; width:100%; padding:4px 0; margin-top:6px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .lyric-preview-lines { gap:4px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .lyric-preview-lines > .preview-current { font-size:15px; color:var(--text); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .listening-lyrics { align-self:stretch; height:100%; grid-template-rows:minmax(0,1fr); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .lyrics-scroll { gap:15px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .lyric-line { text-align:left; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .listening-footer { padding:3px clamp(16px,5.7vw,30px) max(8px,env(safe-area-inset-bottom,0px)); min-height:0; gap:4px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .listening-progress { grid-template-columns:1fr 1fr; gap:0; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-progress input { grid-column:1/-1; grid-row:1; margin:0; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-progress time { grid-row:2; margin-top:2px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-control-row { grid-template-columns:minmax(0,1fr) auto; gap:1px 4px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-control-start { display:none; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-transport { justify-content:space-between; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-control-end { grid-column:2; gap:1px; }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-transport .module-transport { gap:clamp(8px,5vw,26px); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-transport .play-button { width:54px; height:54px; background:var(--accent); color:var(--accentText); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-transport .play-button:hover:not(:disabled) { background:var(--accent); color:var(--accentText); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .listening-progress input {
+    appearance:none; background:linear-gradient(90deg,var(--accent) 0 var(--progress),color-mix(in srgb,var(--text) 38%,transparent) var(--progress) max(var(--progress),var(--buffered)),var(--border) max(var(--progress),var(--buffered)));
+  }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room .listening-progress input::-webkit-slider-thumb { appearance:none; width:10px; height:10px; border-radius:50%; background:var(--accent); }
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-control-end .icon-button { width:40px; height:38px; min-height:38px; }
+  :where(:root:not([data-native-android])) .record-player-quality { display:flex; align-items:center; justify-self:start; grid-column:1; grid-row:2; min-height:34px; font-size:10px; font-weight:660; color:var(--muted); }
+  :where(:root:not([data-native-android])) .record-player-quality i { background:#a4bea5; }
+}
+@media(max-height:550px) and (pointer:coarse) {
+  :where(:root:not([data-native-android])) .studio-app.mobile-app .listening-room[data-android-lyrics] .listening-artwork { display:grid; grid-template-columns:minmax(98px,32vw) minmax(0,1fr); align-items:center; }
+}
+@media(prefers-reduced-motion:reduce) {
+  :where(:root:not([data-native-android])) .studio-app .listening-room.scene-player[data-atmosphere=true],:where(:root:not([data-native-android])) .record-player-cover-title { transition:none; }
+}
+
+:where(:root:not([data-native-android])) .studio-gate-art { background:var(--record-tint); color:var(--text); border:1px solid var(--border); }
+:where(:root:not([data-native-android])) .studio-gate-art::before,:where(:root:not([data-native-android])) .studio-poster-stripes { display:none; }
+:where(:root:not([data-native-android])) .studio-gate-disc { width:85%; left:24%; top:28%; }
+:where(:root:not([data-native-android])) .studio-gate .auth-account-form { display:grid; gap:13px; }
+:where(:root:not([data-native-android])) .auth-screen.native-auth .native-auth-heading h1 { font:740 clamp(27px,7vw,38px)/1.16 var(--display-font); }
+:where(:root:not([data-native-android])) .auth-screen.native-auth :is(.native-auth-core,.auth-account-form>.primary,input:not([type=checkbox]),.core-guide-item,.core-guide .connection-submit) { border-radius:var(--record-radius); }
+
+:where(:root:not([data-native-android])) .record-recommendation-art { position:relative; }
+:where(:root:not([data-native-android])) .record-recommendation-art > .record-cover-menu {
+  position:absolute; inset:6px 6px auto auto; z-index:2;
+  display:grid; place-items:center; width:33px; height:33px; min-height:0; padding:0;
+  border:1px solid #ffffff24; border-radius:50%; background:#24211edb; color:#fff;
+  transition:background .16s var(--studio-ease);
+}
+:where(:root:not([data-native-android])) .record-recommendation-art > .record-cover-menu:hover { background:#24211e; }
+:where(:root:not([data-native-android])) .recommendation-album > .recommendation-reason { white-space:normal; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; font-size:11px; }
+:where(:root:not([data-native-android])) .studio-app .studio-art.record-recommendation-art { transform:none; overflow:visible; box-shadow:none; background:none; }
+:where(:root:not([data-native-android])) .studio-app .studio-art.record-recommendation-art > .recommendation-cover {
+  border-radius:inherit; box-shadow:0 14px 30px #241b2635;
+}
+:where(:root[data-deck=sleeve]:not([data-native-android])) .studio-app:not(.mobile-app) .studio-art > .recommendation-cover { transform:rotate(-4deg); }
+:where(:root:not([data-native-android])) .studio-app .player-skin-silk[data-atmosphere=true] {
+  --record-player-wash: color-mix(in srgb,var(--raised) 78%,#713d42);
+}
+:where(:root:not([data-native-android])) .studio-app .player-skin-silk .listening-cover { box-shadow:0 19px 38px #100e2582; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck-byline,
+:where(:root:not([data-native-android])) .studio-app .studio-feature-reason {
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; overflow-wrap:anywhere;
+}
+:where(:root:not([data-native-android])) .studio-app .studio-deck-dots { padding:0; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck-dots button { min-height:24px; padding-block:6px; }
+:where(:root:not([data-native-android])) .studio-app .studio-feature-notes > p { font-size:12px; }
+:where(:root:not([data-native-android])) .studio-app .studio-feature-track { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+:where(:root:not([data-native-android])) .studio-app .recommendation-album .recommendation-cover,
+:where(:root:not([data-native-android])) .studio-app .recommendation-album .recommendation-cover .cover { border-radius:var(--record-radius); }
+:where(:root:not([data-native-android])) .studio-app .recommendation-album .recommendation-title {
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; white-space:normal; overflow-wrap:anywhere; line-height:1.4;
+}
+:where(:root:not([data-native-android])) .studio-app .cover:has(>svg:only-child) {
+  background:linear-gradient(145deg,var(--raised),var(--surface)); color:var(--muted);
+}
+
+:where(:root:not([data-native-android])) .studio-app .row-actions:has(>.song-menu-trigger) { opacity:1; }
+:where(:root:not([data-native-android])) .studio-app :is(.search-songs,.entity-track,.queue-track) .song-menu-trigger {
+  display:grid; place-items:center; width:34px; min-width:34px; height:36px; min-height:36px; padding:0;
+  flex:none; color:var(--muted); border:0; background:transparent;
+}
+:where(:root:not([data-native-android])) .studio-app .song-menu-trigger:hover,
+:where(:root:not([data-native-android])) .studio-app .song-menu-trigger:focus-visible { background:var(--record-tint); color:var(--text); }
+:where(:root:not([data-native-android])) .studio-app .queue-track:has(.track-drag-handle):has(.song-menu-trigger) { grid-template-columns:24px minmax(0,1fr) auto auto auto; }
+:where(:root:not([data-native-android])) .studio-app .queue-track time { white-space:nowrap; }
+:where(:root:not([data-native-android])) .studio-app .queue-track .song-menu-trigger { width:28px; min-width:28px; opacity:1; }
+:where(:root:not([data-native-android])) .studio-app .search-results h1 { overflow-wrap:anywhere; }
+:where(:root:not([data-native-android])) .studio-app .search-songs article { gap:10px; padding:7px 9px; }
+:where(:root:not([data-native-android])) .studio-app .search-song-album {
+  min-width:0; max-width:26%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .record-scene-state { color:var(--muted); font-size:12px; font-weight:650; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .scene-back-label { display:flex; align-items:center; gap:5px; color:var(--muted); }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-artwork {
+  justify-content:safe center; gap:clamp(9px,2.4vh,20px); min-height:min-content;
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-caption h1 {
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3;
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-cover {
+  width:min(100%,max(116px,calc(100dvh - 401px))); max-height:none; flex-shrink:0;
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-caption :is(p,.listening-album) {
+  display:inline; margin:0; white-space:normal; overflow-wrap:anywhere; font-size:13px;
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-album::before { content:" · "; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-lyrics { border-left:1px solid color-mix(in srgb,var(--text) 12%,transparent); padding-left:clamp(13px,2.5vw,38px); }
+:where(:root:not([data-native-android])) .studio-app .listening-lyrics .lyrics-reader { mask-image:linear-gradient(transparent,#000 7%,#000 88%,transparent); }
+:where(:root:not([data-native-android])) .studio-app .listening-lyrics .lyrics-scroll { mask-image:none; }
+
+@media(max-height:720px) {
+  :where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-caption h1 { -webkit-line-clamp:2; }
+}
+@media(max-width:1100px) {
+  :where(:root:not([data-native-android])) .studio-app .queue-play strong {
+    display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; white-space:normal; overflow-wrap:anywhere;
+  }
+}
+@media(max-width:760px) {
+  :where(:root:not([data-native-android])) .studio-app .search-songs article { gap:7px; }
+  :where(:root:not([data-native-android])) .studio-app .search-songs article > .search-song-album { display:none; }
+}
+
+:where(:root:not([data-native-android])) .studio-app.rail-hidden:not(.mobile-app),
+:where(:root:not([data-native-android])) .studio-app.expanded-player:not(.mobile-app) { --sidebar:0px; }
+:where(:root:not([data-native-android])) .studio-app .record-rail[hidden],
+:where(:root:not([data-native-android])) .studio-app.expanded-player > :is(.record-rail,.studio-mast) { display:none; }
+.mast-search-group { display:flex; align-items:center; gap:8px; flex:1; min-width:0; }
+:where(:root:not([data-native-android])) .studio-app.expanded-player:not(.mobile-app) { --topbar:0px; }
+:where(:root:not([data-native-android])) .studio-app.player-route:not(.mobile-app) > .main-content {
+  position:fixed; inset:var(--topbar) 0 var(--transport) var(--sidebar); width:auto; height:auto; padding:0; margin:0;
+}
+:where(:root:not([data-native-android])) .studio-app.player-route.with-queue:not(.mobile-app) > .main-content { right:var(--queue); width:auto; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room .listening-stage {
+  width:min(100%,1440px); padding:clamp(14px,3vh,34px) clamp(20px,4vw,80px);
+  gap:clamp(20px,4vw,85px);
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-artwork {
+  --art-size:min(100%, max(138px,calc(100dvh - var(--topbar) - var(--transport) - 230px)),460px);
+  align-items:center; gap:clamp(12px,2vh,22px);
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room .listening-cover {
+  width:var(--art-size); max-width:none; max-height:none; flex:none;
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room .listening-caption { width:var(--art-size); }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room .scene-toolbar { gap:8px; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .listening-room .scene-tools { gap:2px; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .lyrics-scroll { overflow-anchor:none; scroll-behavior:auto; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .lyric-line { font-weight:650; opacity:.56; }
+:where(:root:not([data-native-android])) .studio-app .listening-room .lyric-line.active { font-weight:650; opacity:1; }
+:where(:root:not([data-native-android])) .studio-app .studio-discover-title { margin-block:clamp(16px,2.5vh,28px) 14px; }
+:where(:root:not([data-native-android])) .studio-app .studio-discover-tools { min-width:0; gap:8px; flex-wrap:wrap; }
+:where(:root:not([data-native-android])) .studio-app .record-discover-tabs { max-width:100%; overflow-x:auto; scrollbar-width:none; }
+:where(:root:not([data-native-android])) .studio-app .record-discover-tabs button { white-space:nowrap; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .studio-deck {
+  grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr); align-items:center;
+  padding:clamp(16px,2vw,30px); gap:clamp(16px,3vw,50px); min-height:0;
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .studio-jacket {
+  grid-column:1; grid-row:1; justify-items:end; min-height:0; background:none; overflow:visible;
+}
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .studio-deck-info { grid-column:2; grid-row:1; padding:4px 0; }
+:where(:root:not([data-native-android])) .studio-app:not(.mobile-app) .studio-art.record-recommendation-art { width:min(100%,clamp(144px,14vw,224px)); height:auto; aspect-ratio:1; border-radius:var(--record-radius); transform:none; }
+:where(:root:not([data-native-android])) .studio-app .studio-art.record-recommendation-art > .recommendation-cover { transform:none; overflow:hidden; box-shadow:0 6px 18px #161e171a; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck .studio-groove { display:none; }
+:where(:root:not([data-native-android])) .studio-app .studio-deck h2 { font-size:calc(clamp(24px,2.8vw,44px) * var(--type-scale)); }
+:where(:root:not([data-native-android])) .studio-app .studio-deck-rail { align-items:stretch; }
+@media (max-width:1050px) {
+  :where(:root:not([data-native-android])) .studio-app.player-route.with-queue:not(.mobile-app) > .main-content { right:0; }
+}

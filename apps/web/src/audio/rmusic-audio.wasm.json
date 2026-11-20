@@ -1,0 +1,19 @@
+{
+  "sha256": "28dcd91a2925ff96c578f9dd099bea1846de30895b9589bef8f473cf6aca2cce",
+  "bytes": 662689,
+  "memory_limit_bytes": 268435456,
+  "target_features": [
+    "simd128"
+  ],
+  "source_hash_encoding": "UTF-8 with LF newlines",
+  "sources": {
+    "Cargo.toml": "e3d7baf8f02620b9c0150f60f2538d474b54b0925f1120c153be76be7a0e1aae",
+    "Cargo.lock": "3f367703fc29b863c0798501f006a3a41c3f202f6359ed839d9d15e60d8c0151",
+    "crates/audio-wasm/Cargo.toml": "161c89bbfe5ff24bab59040ba997572ea6d586ae027486d2d92c72a2ae21abba",
+    "crates/audio-wasm/src/lib.rs": "dabc5d07de169304a26dc79f2ac617b16372e9ec3b206d3572a0adf7bbfd937a",
+    "crates/audio/src/dsp.rs": "fc844f77140e51a184d1dabba6caf7b6d3e413c89e9f9466a8f4f96174255560",
+    "crates/audio/src/impulse.rs": "d5280da96ee8efb87937ade668067ec211afb53ed46697976fa6bb0fc9ee23e6",
+    "crates/audio/src/convolution.rs": "f3db3f97e314d06815cbe3f939a4b3cd766d5bc6c317ef927816f4fe9d91a50c",
+    "scripts/build_audio_wasm.py": "7ad2e14e8f4adf1674518c475a13be2a5985acd933c2391f273bc736323912c8"
+  }
+}

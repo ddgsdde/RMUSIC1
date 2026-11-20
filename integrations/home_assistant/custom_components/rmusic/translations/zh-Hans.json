@@ -1,0 +1,32 @@
+{
+  "title": "R-Music",
+  "config": {
+    "step": {
+      "user": {
+        "title": "连接 R-Music 核心",
+        "description": "在 R-Music 设置中创建具有 read 和 control 权限的可撤销 API 凭证。地址需包含完整路径前缀。证书校验选项仅作用于此核心。",
+        "data": {"url": "核心地址", "token": "API 凭证", "verify_ssl": "校验 HTTPS 证书"}
+      },
+      "reauth_confirm": {
+        "title": "更新 R-Music API 凭证",
+        "description": "原凭证已过期或被撤销，请输入具有 read 和 control 权限的新凭证。",
+        "data": {"url": "核心地址", "token": "API 凭证", "verify_ssl": "校验 HTTPS 证书"}
+      },
+      "reconfigure": {
+        "title": "重新配置 R-Music",
+        "data": {"url": "核心地址", "token": "API 凭证", "verify_ssl": "校验 HTTPS 证书"}
+      }
+    },
+    "error": {
+      "cannot_connect": "无法连接核心，请检查地址、端口、路径和证书。",
+      "invalid_auth": "凭证已过期、被撤销或缺少所需权限。",
+      "invalid_url": "请输入 HTTP(S) 地址，不含账号密码、查询参数或片段。"
+    },
+    "abort": {
+      "already_configured": "此核心已经配置。",
+      "reauth_successful": "凭证已更新。",
+      "reconfigure_successful": "配置已更新。",
+      "wrong_core": "地址与此条目不同，请将其他核心添加为独立集成。"
+    }
+  }
+}

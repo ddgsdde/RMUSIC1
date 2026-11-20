@@ -1,0 +1,12 @@
+// @vitest-environment jsdom
+import {act} from "react";
+import {createRoot,type Root} from "react-dom/client";
+import {afterEach,beforeEach,expect,it,vi} from "vitest";
+import {useTrackReorder} from "./useTrackReorder";
+let host:HTMLDivElement,root:Root;
+beforeEach(()=>{vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT",true);vi.stubGlobal("requestAnimationFrame",vi.fn(()=>1));vi.stubGlobal("cancelAnimationFrame",vi.fn());host=document.createElement("div");document.body.append(host);root=createRoot(host);HTMLButtonElement.prototype.setPointerCapture=vi.fn();});
+afterEach(async()=>{await act(async()=>root.unmount());host.remove();vi.restoreAllMocks();vi.unstubAllGlobals();});
+function Rows({move,version="v1"}:{move:(a:number,b:number)=>void;version?:string}){const d=useTrackReorder({version,count:3,onMove:move});return <div ref={d.container}>{[0,1,2].map(i=><div key={i} {...d.rowProps(i)}>{d.handle(i,`Song ${i}`)}</div>)}</div>;}
+async function pointer(node:Element,type:string,y:number){await act(async()=>{node.dispatchEvent(new MouseEvent(type,{bubbles:true,clientX:10,clientY:y,button:0}));});}
+it("触屏手柄松开后只提交一次移动，普通点击不排序",async()=>{const move=vi.fn();await act(async()=>root.render(<Rows move={move}/>));const buttons=host.querySelectorAll("button"),target=host.querySelector('[data-reorder-index="2"]')!;Object.defineProperty(document,"elementFromPoint",{configurable:true,value:vi.fn(()=>target)});await pointer(buttons[0],"pointerdown",10);await pointer(buttons[0],"pointerup",10);expect(move).not.toHaveBeenCalled();await pointer(buttons[0],"pointerdown",10);await pointer(buttons[0],"pointermove",110);expect(target.getAttribute("data-reorder-target")).toBe("true");await pointer(buttons[0],"pointerup",110);await pointer(buttons[0],"lostpointercapture",110);expect(move.mock.calls).toEqual([[0,2]]);});
+it("其他设备更新快照时取消正在拖动的旧队列；键盘仍可移动",async()=>{const move=vi.fn();await act(async()=>root.render(<Rows move={move}/>));const button=host.querySelector("button")!;Object.defineProperty(document,"elementFromPoint",{configurable:true,value:vi.fn(()=>host.querySelector('[data-reorder-index="2"]'))});await pointer(button,"pointerdown",10);await pointer(button,"pointermove",110);await act(async()=>root.render(<Rows move={move} version="remote-change"/>));await pointer(button,"pointerup",110);expect(move).not.toHaveBeenCalled();await act(async()=>button.dispatchEvent(new KeyboardEvent("keydown",{key:"ArrowDown",bubbles:true})));expect(move.mock.calls).toEqual([[0,1]]);});

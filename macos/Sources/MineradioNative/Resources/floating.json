@@ -1,0 +1,418 @@
+{
+  "name": "floating",
+  "textures": [],
+  "stages": {
+    "vert": {
+      "entryPoints": [
+        {
+          "name": "main",
+          "mode": "vert"
+        }
+      ],
+      "types": {
+        "_41": {
+          "name": "StageUniforms",
+          "members": [
+            {
+              "name": "uPulse",
+              "type": "float",
+              "offset": 0
+            },
+            {
+              "name": "uTime",
+              "type": "float",
+              "offset": 4
+            },
+            {
+              "name": "uPresence",
+              "type": "float",
+              "offset": 8
+            },
+            {
+              "name": "uBrilliance",
+              "type": "float",
+              "offset": 12
+            },
+            {
+              "name": "uAir",
+              "type": "float",
+              "offset": 16
+            },
+            {
+              "name": "uWarmth",
+              "type": "float",
+              "offset": 20
+            },
+            {
+              "name": "uBrightness",
+              "type": "float",
+              "offset": 24
+            },
+            {
+              "name": "uSharpness",
+              "type": "float",
+              "offset": 28
+            },
+            {
+              "name": "uBaseColor1",
+              "type": "vec3",
+              "offset": 32
+            },
+            {
+              "name": "uBaseColor2",
+              "type": "vec3",
+              "offset": 48
+            },
+            {
+              "name": "uFogColor",
+              "type": "vec3",
+              "offset": 64
+            },
+            {
+              "name": "uCoolCore",
+              "type": "vec3",
+              "offset": 80
+            },
+            {
+              "name": "uCoolEdge",
+              "type": "vec3",
+              "offset": 96
+            },
+            {
+              "name": "uWarmCore",
+              "type": "vec3",
+              "offset": 112
+            },
+            {
+              "name": "uWarmEdge",
+              "type": "vec3",
+              "offset": 128
+            },
+            {
+              "name": "uRippleColor",
+              "type": "vec3",
+              "offset": 144
+            },
+            {
+              "name": "uGlowIntensity",
+              "type": "float",
+              "offset": 156
+            },
+            {
+              "name": "uGlintStrength",
+              "type": "float",
+              "offset": 160
+            },
+            {
+              "name": "modelViewMatrix",
+              "type": "mat4",
+              "offset": 176,
+              "matrix_stride": 16
+            },
+            {
+              "name": "projectionMatrix",
+              "type": "mat4",
+              "offset": 240,
+              "matrix_stride": 16
+            },
+            {
+              "name": "modelMatrix",
+              "type": "mat4",
+              "offset": 304,
+              "matrix_stride": 16
+            },
+            {
+              "name": "viewMatrix",
+              "type": "mat4",
+              "offset": 368,
+              "matrix_stride": 16
+            }
+          ]
+        },
+        "_84": {
+          "name": "gl_PerVertex",
+          "members": [
+            {
+              "name": "gl_Position",
+              "type": "vec4"
+            },
+            {
+              "name": "gl_PointSize",
+              "type": "float"
+            },
+            {
+              "name": "gl_ClipDistance",
+              "type": "float",
+              "array": [
+                1
+              ],
+              "array_size_is_literal": [
+                true
+              ]
+            },
+            {
+              "name": "gl_CullDistance",
+              "type": "float",
+              "array": [
+                1
+              ],
+              "array_size_is_literal": [
+                true
+              ]
+            }
+          ]
+        }
+      },
+      "inputs": [
+        {
+          "type": "vec2",
+          "name": "uv",
+          "location": 1
+        },
+        {
+          "type": "vec3",
+          "name": "normal",
+          "location": 2
+        },
+        {
+          "type": "mat4",
+          "name": "instanceMatrix",
+          "location": 3
+        },
+        {
+          "type": "vec3",
+          "name": "position",
+          "location": 0
+        }
+      ],
+      "outputs": [
+        {
+          "type": "vec2",
+          "name": "vUv",
+          "location": 0
+        },
+        {
+          "type": "vec3",
+          "name": "vNormal",
+          "location": 4
+        },
+        {
+          "type": "vec2",
+          "name": "vInstancePos",
+          "location": 6
+        },
+        {
+          "type": "float",
+          "name": "vDistance",
+          "location": 2
+        },
+        {
+          "type": "vec2",
+          "name": "vRippleAnim",
+          "location": 3
+        },
+        {
+          "type": "float",
+          "name": "vElevation",
+          "location": 1
+        },
+        {
+          "type": "float",
+          "name": "vRelativeY",
+          "location": 5
+        }
+      ],
+      "ubos": [
+        {
+          "type": "_41",
+          "name": "StageUniforms",
+          "block_size": 432,
+          "set": 0,
+          "binding": 0
+        }
+      ]
+    },
+    "frag": {
+      "entryPoints": [
+        {
+          "name": "main",
+          "mode": "frag"
+        }
+      ],
+      "types": {
+        "_63": {
+          "name": "StageUniforms",
+          "members": [
+            {
+              "name": "uPulse",
+              "type": "float",
+              "offset": 0
+            },
+            {
+              "name": "uTime",
+              "type": "float",
+              "offset": 4
+            },
+            {
+              "name": "uPresence",
+              "type": "float",
+              "offset": 8
+            },
+            {
+              "name": "uBrilliance",
+              "type": "float",
+              "offset": 12
+            },
+            {
+              "name": "uAir",
+              "type": "float",
+              "offset": 16
+            },
+            {
+              "name": "uWarmth",
+              "type": "float",
+              "offset": 20
+            },
+            {
+              "name": "uBrightness",
+              "type": "float",
+              "offset": 24
+            },
+            {
+              "name": "uSharpness",
+              "type": "float",
+              "offset": 28
+            },
+            {
+              "name": "uBaseColor1",
+              "type": "vec3",
+              "offset": 32
+            },
+            {
+              "name": "uBaseColor2",
+              "type": "vec3",
+              "offset": 48
+            },
+            {
+              "name": "uFogColor",
+              "type": "vec3",
+              "offset": 64
+            },
+            {
+              "name": "uCoolCore",
+              "type": "vec3",
+              "offset": 80
+            },
+            {
+              "name": "uCoolEdge",
+              "type": "vec3",
+              "offset": 96
+            },
+            {
+              "name": "uWarmCore",
+              "type": "vec3",
+              "offset": 112
+            },
+            {
+              "name": "uWarmEdge",
+              "type": "vec3",
+              "offset": 128
+            },
+            {
+              "name": "uRippleColor",
+              "type": "vec3",
+              "offset": 144
+            },
+            {
+              "name": "uGlowIntensity",
+              "type": "float",
+              "offset": 156
+            },
+            {
+              "name": "uGlintStrength",
+              "type": "float",
+              "offset": 160
+            },
+            {
+              "name": "modelViewMatrix",
+              "type": "mat4",
+              "offset": 176,
+              "matrix_stride": 16
+            },
+            {
+              "name": "projectionMatrix",
+              "type": "mat4",
+              "offset": 240,
+              "matrix_stride": 16
+            },
+            {
+              "name": "modelMatrix",
+              "type": "mat4",
+              "offset": 304,
+              "matrix_stride": 16
+            },
+            {
+              "name": "viewMatrix",
+              "type": "mat4",
+              "offset": 368,
+              "matrix_stride": 16
+            }
+          ]
+        }
+      },
+      "inputs": [
+        {
+          "type": "vec3",
+          "name": "vNormal",
+          "location": 4
+        },
+        {
+          "type": "float",
+          "name": "vRelativeY",
+          "location": 5
+        },
+        {
+          "type": "vec2",
+          "name": "vInstancePos",
+          "location": 6
+        },
+        {
+          "type": "float",
+          "name": "vElevation",
+          "location": 1
+        },
+        {
+          "type": "vec2",
+          "name": "vRippleAnim",
+          "location": 3
+        },
+        {
+          "type": "vec2",
+          "name": "vUv",
+          "location": 0
+        },
+        {
+          "type": "float",
+          "name": "vDistance",
+          "location": 2
+        }
+      ],
+      "outputs": [
+        {
+          "type": "vec4",
+          "name": "nativeColor",
+          "location": 0
+        }
+      ],
+      "ubos": [
+        {
+          "type": "_63",
+          "name": "StageUniforms",
+          "block_size": 432,
+          "set": 0,
+          "binding": 0
+        }
+      ]
+    }
+  }
+}

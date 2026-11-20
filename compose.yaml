@@ -1,0 +1,32 @@
+name: rmusic
+services:
+  core:
+    image: ${RMUSIC_IMAGE:-rmusic-core:0.1.0-preview.1}
+    build:
+      context: .
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 30s
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:size=256m,mode=1777
+    ports:
+      - "${RMUSIC_HOST:-127.0.0.1}:${RMUSIC_PORT:-7800}:7800"
+    environment:
+      RMUSIC_PUBLIC_URL: ${RMUSIC_PUBLIC_URL:-http://127.0.0.1:7800}
+      RMUSIC_PORT: "7800"
+      RMUSIC_CACHE_ENABLED: "1"
+      RMUSIC_BACKUP_DIR: /backups
+    volumes:
+      - rmusic-data:/data
+      - rmusic-cache:/cache
+      - rmusic-backups:/backups
+      - "${RMUSIC_MUSIC_DIR:-./music}:/music:ro"
+volumes:
+  rmusic-data:
+  rmusic-cache:
+  rmusic-backups:

@@ -1,0 +1,35 @@
+{
+  "id": "00000000-0000-4000-8000-000000000003",
+  "version": 2,
+  "track_id": "track",
+  "title": "PCM",
+  "artist": "QA",
+  "duration": 120.0,
+  "started_at": 1792238399000,
+  "updated_at": 1792238400000,
+  "position": 11.0005,
+  "reason": "ended",
+  "days": {
+    "2026-10-17": {
+      "seconds": 1.0,
+      "last_at": 1792238400000
+    }
+  },
+  "measured": {
+    "version": 2,
+    "playback_id": "00000000-0000-4000-8000-000000000001",
+    "listen_session_id": "00000000-0000-4000-8000-000000000002",
+    "segments": [
+      {
+        "start": 10.0,
+        "end": 11.0005,
+        "last_at": 1792238400000,
+        "output": {
+          "start": 0,
+          "end": 768000,
+          "sample_rate": 768000
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+.provider-account{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}.provider-account>strong{font-size:12px;font-weight:600}.provider-account>strong[data-authenticated=true]{color:var(--accent)}.provider-account>button{font-size:11px;padding:6px 9px;min-height:32px}.provider-account>small{flex-basis:100%;color:var(--muted)}

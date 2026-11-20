@@ -1,0 +1,9 @@
+export type CoverPalette={base:[number,number,number];light:[number,number,number];shade:[number,number,number];accent:string};
+export const fallbackPalette:CoverPalette={base:[.65,.67,.82],light:[.86,.87,.92],shade:[.53,.57,.77],accent:"#525aca"};
+function rgb(h:number,s:number,l:number):[number,number,number]{const a=s*Math.min(l,1-l);return [0,8,4].map(n=>{const k=(n+h*12)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1));}) as [number,number,number];}
+export function paletteFromPixels(pixels:Uint8ClampedArray):CoverPalette {
+ const bins=new Map<number,{count:number;h:number;s:number;weight:number}>();
+ for(let i=0;i<pixels.length;i+=4){if(pixels[i+3]<200)continue;const r=pixels[i]/255,g=pixels[i+1]/255,b=pixels[i+2]/255,max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min,l=(max+min)/2;if(l<.09||l>.92||d<.08)continue;const sat=d/(1-Math.abs(2*l-1));let h=d===0?0:max===r?((g-b)/d+6)%6:max===g?(b-r)/d+2:(r-g)/d+4;h/=6;const key=Math.floor(h*24),weight=.15+sat*sat;const v=bins.get(key)||{count:0,h:0,s:0,weight:0};v.count++;v.h+=h*weight;v.s+=sat*weight;v.weight+=weight;bins.set(key,v);}
+ const best=[...bins.values()].sort((a,b)=>b.weight-a.weight)[0];if(!best)return fallbackPalette;const h=best.h/best.weight,s=Math.min(.4,Math.max(.18,best.s/best.weight*.55));const accent=rgb(h,Math.max(.4,s),.38).map(n=>Math.round(n*255));return{base:rgb(h,s,.75),light:rgb((h+.035)%1,s*.45,.9),shade:rgb((h+.98)%1,s*.85,.63),accent:`rgb(${accent.join(",")})`};
+}
+export function extractCoverPalette(image:HTMLImageElement):CoverPalette {try{const c=document.createElement("canvas");c.width=48;c.height=48;const ctx=c.getContext("2d",{willReadFrequently:true});if(!ctx)return fallbackPalette;ctx.drawImage(image,0,0,48,48);return paletteFromPixels(ctx.getImageData(0,0,48,48).data);}catch{return fallbackPalette;}}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+package rmusic.audio.v1;
+
+// This schema is negotiated as pcm-frame-v1; v0.1 HTTP pull endpoints do not claim it.
+message AudioFrame {
+  string stream_id = 1;
+  uint64 sequence = 2;
+  uint64 presentation_timestamp_ns = 3;
+  uint32 sample_frames = 4;
+  bytes data = 5;
+  uint32 sample_rate = 6;
+  uint32 channels = 7;
+  enum Encoding { UNSPECIFIED = 0; S16_LE = 1; S24_LE = 2; S32_LE = 3; F32_LE = 4; F64_LE = 5; }
+  Encoding encoding = 8;
+  bool discontinuity = 9;
+}
+message ClockReport {
+  string endpoint_id = 1;
+  uint64 monotonic_ns = 2;
+  uint64 device_clock_ns = 3;
+  uint64 played_frames = 4;
+  uint32 buffered_frames = 5;
+}
+message Flush { string stream_id = 1; uint64 next_sequence = 2; }

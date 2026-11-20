@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>R-Music — Track / Play</title>
+  <defs>
+    <linearGradient id="surface" x1="0" y1="0" x2=".8" y2="1">
+      <stop stop-color="#293129"/><stop offset="1" stop-color="#111611"/>
+    </linearGradient>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#surface)"/>
+  <rect x="101" y="101" width="822" height="822" rx="184" fill="none" stroke="#FFF" stroke-opacity=".12" stroke-width="2"/>
+  <g transform="translate(512 512) scale(1.08) translate(-536 -518)">
+    <path fill="#D7EA72" fill-rule="evenodd" d="M322 282Q322 270 334 270H536C668 270 740 344 740 446C740 529 696 589 623 616L752 754Q760 766 746 766H614L470 612H442V754Q442 766 430 766H334Q322 766 322 754ZM450 375Q442 370 442 380V507Q442 517 450 512L565 449Q573 444 565 439Z"/>
+  </g>
+</svg>

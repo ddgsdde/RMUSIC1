@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:name=".WindowTestApplication">
+        <receiver android:name=".WindowControlReceiver" android:exported="true" />
+        <receiver android:name=".QueueControlReceiver" android:exported="true" />
+        <activity android:name=".DecoderTestActivity" android:exported="false" />
+    </application>
+</manifest>

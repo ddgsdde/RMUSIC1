@@ -1,0 +1,45 @@
+{
+  "id": "example-plugin",
+  "name": "我的插件",
+  "version": "0.1.0",
+  "api_version": "1",
+  "core_api": ">=0.1.0, <2.0.0",
+  "entrypoint": "provider.py",
+  "capabilities": [],
+  "kind": "extension",
+  "extension_api": "1",
+  "extensions": [
+    {
+      "method": "summarize",
+      "title": "曲库概览",
+      "description": "读取 Core 提供的曲库数量摘要",
+      "kind": "statistics",
+      "scope": "read",
+      "effect": "none",
+      "context": "library_summary_v1",
+      "input": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "tracks": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sources": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "tracks",
+          "sources"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

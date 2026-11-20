@@ -1,0 +1,6 @@
+.build/
+target/
+dist/
+artifacts/
+.swiftpm/
+.DS_Store

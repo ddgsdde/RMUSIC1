@@ -1,0 +1,12 @@
+[package]
+name = "rmusic-coreaudio"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-or-later"
+[dependencies]
+rmusic-audio = { path = "../../crates/audio" }
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+[build-dependencies]
+cc = "1"

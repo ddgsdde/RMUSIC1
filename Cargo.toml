@@ -1,0 +1,27 @@
+[workspace]
+resolver = "2"
+members = ["crates/core", "crates/audio", "crates/audio-wasm", "crates/bridge", "crates/discovery", "crates/remote", "apps/desktop/src-tauri"]
+default-members = ["crates/core", "crates/audio", "crates/bridge"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-or-later"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[profile.dev]
+incremental = false
+
+# The optional sinc converter must keep up with device callbacks in developer builds.
+[profile.dev.package.rubato]
+opt-level = 3
+
+[profile.dev.package.rmusic-audio]
+opt-level = 2
+
+[profile.test]
+incremental = false

@@ -1,0 +1,38 @@
+[package]
+name = "rmusic-bridge"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-or-later"
+
+[features]
+adaptive-sync = ["rmusic-audio/adaptive-sync"]
+asio-output = ["rmusic-audio/asio-output"]
+
+[dependencies]
+rmusic-discovery = { path = "../discovery" }
+rmusic-remote = { path = "../remote" }
+rmusic-audio = { path = "../audio", features = ["alsa-output"] }
+anyhow = "1"
+clap = { version = "4", features = ["derive", "env"] }
+futures-util = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+tokio-tungstenite = { version = "0.28", features = ["rustls-tls-webpki-roots"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "stream"] }
+rustls = { version = "0.23", default-features = false, features = ["std", "ring", "tls12"] }
+webpki-roots = "1"
+sha2 = "0.10"
+url = { version = "2", features = ["serde"] }
+uuid = { version = "1", features = ["v4"] }
+axum = "0.8"
+tokio-util = { version = "0.7", features = ["io"] }
+quick-xml = "0.42"
+chrono = "0.4"
+rusqlite = { version = "0.39", features = ["bundled"] }
+
+tempfile = "3"
+
+[dev-dependencies]
+axum = { version = "0.8", features = ["ws"] }
+tokio-rustls = { version = "0.26", default-features = false, features = ["ring", "tls12"] }

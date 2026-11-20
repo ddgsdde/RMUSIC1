@@ -1,0 +1,295 @@
+{
+  "name": "stars",
+  "textures": [
+    {
+      "name": "uDotTex",
+      "binding": 1
+    }
+  ],
+  "stages": {
+    "vert": {
+      "entryPoints": [
+        {
+          "name": "main",
+          "mode": "vert"
+        }
+      ],
+      "types": {
+        "_53": {
+          "name": "StageUniforms",
+          "members": [
+            {
+              "name": "uTime",
+              "type": "float",
+              "offset": 0
+            },
+            {
+              "name": "uBass",
+              "type": "float",
+              "offset": 4
+            },
+            {
+              "name": "uTreble",
+              "type": "float",
+              "offset": 8
+            },
+            {
+              "name": "uBeat",
+              "type": "float",
+              "offset": 12
+            },
+            {
+              "name": "uEnergy",
+              "type": "float",
+              "offset": 16
+            },
+            {
+              "name": "uPixel",
+              "type": "float",
+              "offset": 20
+            },
+            {
+              "name": "uPointScale",
+              "type": "float",
+              "offset": 24
+            },
+            {
+              "name": "uAlpha",
+              "type": "float",
+              "offset": 28
+            },
+            {
+              "name": "uParticleDim",
+              "type": "float",
+              "offset": 32
+            },
+            {
+              "name": "uTintColor",
+              "type": "vec3",
+              "offset": 48
+            },
+            {
+              "name": "modelViewMatrix",
+              "type": "mat4",
+              "offset": 64,
+              "matrix_stride": 16
+            },
+            {
+              "name": "projectionMatrix",
+              "type": "mat4",
+              "offset": 128,
+              "matrix_stride": 16
+            }
+          ]
+        },
+        "_378": {
+          "name": "gl_PerVertex",
+          "members": [
+            {
+              "name": "gl_Position",
+              "type": "vec4"
+            },
+            {
+              "name": "gl_PointSize",
+              "type": "float"
+            },
+            {
+              "name": "gl_ClipDistance",
+              "type": "float",
+              "array": [
+                1
+              ],
+              "array_size_is_literal": [
+                true
+              ]
+            },
+            {
+              "name": "gl_CullDistance",
+              "type": "float",
+              "array": [
+                1
+              ],
+              "array_size_is_literal": [
+                true
+              ]
+            }
+          ]
+        }
+      },
+      "inputs": [
+        {
+          "type": "float",
+          "name": "aLane",
+          "location": 1
+        },
+        {
+          "type": "float",
+          "name": "aSeed",
+          "location": 0
+        },
+        {
+          "type": "float",
+          "name": "aDepthSeed",
+          "location": 2
+        },
+        {
+          "type": "vec3",
+          "name": "position",
+          "location": 3
+        }
+      ],
+      "outputs": [
+        {
+          "type": "vec3",
+          "name": "vColor",
+          "location": 0
+        },
+        {
+          "type": "float",
+          "name": "vTwinkle",
+          "location": 2
+        },
+        {
+          "type": "float",
+          "name": "vAlpha",
+          "location": 1
+        }
+      ],
+      "textures": [
+        {
+          "type": "sampler2D",
+          "name": "uDotTex",
+          "set": 0,
+          "binding": 1
+        }
+      ],
+      "ubos": [
+        {
+          "type": "_53",
+          "name": "StageUniforms",
+          "block_size": 192,
+          "set": 0,
+          "binding": 0
+        }
+      ]
+    },
+    "frag": {
+      "entryPoints": [
+        {
+          "name": "main",
+          "mode": "frag"
+        }
+      ],
+      "types": {
+        "_63": {
+          "name": "StageUniforms",
+          "members": [
+            {
+              "name": "uTime",
+              "type": "float",
+              "offset": 0
+            },
+            {
+              "name": "uBass",
+              "type": "float",
+              "offset": 4
+            },
+            {
+              "name": "uTreble",
+              "type": "float",
+              "offset": 8
+            },
+            {
+              "name": "uBeat",
+              "type": "float",
+              "offset": 12
+            },
+            {
+              "name": "uEnergy",
+              "type": "float",
+              "offset": 16
+            },
+            {
+              "name": "uPixel",
+              "type": "float",
+              "offset": 20
+            },
+            {
+              "name": "uPointScale",
+              "type": "float",
+              "offset": 24
+            },
+            {
+              "name": "uAlpha",
+              "type": "float",
+              "offset": 28
+            },
+            {
+              "name": "uParticleDim",
+              "type": "float",
+              "offset": 32
+            },
+            {
+              "name": "uTintColor",
+              "type": "vec3",
+              "offset": 48
+            },
+            {
+              "name": "modelViewMatrix",
+              "type": "mat4",
+              "offset": 64,
+              "matrix_stride": 16
+            },
+            {
+              "name": "projectionMatrix",
+              "type": "mat4",
+              "offset": 128,
+              "matrix_stride": 16
+            }
+          ]
+        }
+      },
+      "inputs": [
+        {
+          "type": "vec3",
+          "name": "vColor",
+          "location": 0
+        },
+        {
+          "type": "float",
+          "name": "vTwinkle",
+          "location": 2
+        },
+        {
+          "type": "float",
+          "name": "vAlpha",
+          "location": 1
+        }
+      ],
+      "outputs": [
+        {
+          "type": "vec4",
+          "name": "nativeColor",
+          "location": 0
+        }
+      ],
+      "textures": [
+        {
+          "type": "sampler2D",
+          "name": "uDotTex",
+          "set": 0,
+          "binding": 1
+        }
+      ],
+      "ubos": [
+        {
+          "type": "_63",
+          "name": "StageUniforms",
+          "block_size": 192,
+          "set": 0,
+          "binding": 0
+        }
+      ]
+    }
+  }
+}

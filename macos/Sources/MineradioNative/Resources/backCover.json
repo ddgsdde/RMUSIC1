@@ -1,0 +1,236 @@
+{
+  "name": "backCover",
+  "textures": [
+    {
+      "name": "uCoverTex",
+      "binding": 1
+    },
+    {
+      "name": "uDotTex",
+      "binding": 2
+    }
+  ],
+  "stages": {
+    "vert": {
+      "entryPoints": [
+        {
+          "name": "main",
+          "mode": "vert"
+        }
+      ],
+      "types": {
+        "_15": {
+          "name": "StageUniforms",
+          "members": [
+            {
+              "name": "uTime",
+              "type": "float",
+              "offset": 0
+            },
+            {
+              "name": "uBass",
+              "type": "float",
+              "offset": 4
+            },
+            {
+              "name": "uPixel",
+              "type": "float",
+              "offset": 8
+            },
+            {
+              "name": "uAlpha",
+              "type": "float",
+              "offset": 12
+            },
+            {
+              "name": "modelViewMatrix",
+              "type": "mat4",
+              "offset": 16,
+              "matrix_stride": 16
+            },
+            {
+              "name": "projectionMatrix",
+              "type": "mat4",
+              "offset": 80,
+              "matrix_stride": 16
+            }
+          ]
+        },
+        "_141": {
+          "name": "gl_PerVertex",
+          "members": [
+            {
+              "name": "gl_Position",
+              "type": "vec4"
+            },
+            {
+              "name": "gl_PointSize",
+              "type": "float"
+            },
+            {
+              "name": "gl_ClipDistance",
+              "type": "float",
+              "array": [
+                1
+              ],
+              "array_size_is_literal": [
+                true
+              ]
+            },
+            {
+              "name": "gl_CullDistance",
+              "type": "float",
+              "array": [
+                1
+              ],
+              "array_size_is_literal": [
+                true
+              ]
+            }
+          ]
+        }
+      },
+      "inputs": [
+        {
+          "type": "vec3",
+          "name": "position",
+          "location": 2
+        },
+        {
+          "type": "float",
+          "name": "aRand",
+          "location": 1
+        },
+        {
+          "type": "vec2",
+          "name": "aUv",
+          "location": 0
+        }
+      ],
+      "outputs": [
+        {
+          "type": "vec3",
+          "name": "vC",
+          "location": 0
+        },
+        {
+          "type": "float",
+          "name": "vA",
+          "location": 1
+        }
+      ],
+      "textures": [
+        {
+          "type": "sampler2D",
+          "name": "uCoverTex",
+          "set": 0,
+          "binding": 1
+        },
+        {
+          "type": "sampler2D",
+          "name": "uDotTex",
+          "set": 0,
+          "binding": 2
+        }
+      ],
+      "ubos": [
+        {
+          "type": "_15",
+          "name": "StageUniforms",
+          "block_size": 144,
+          "set": 0,
+          "binding": 0
+        }
+      ]
+    },
+    "frag": {
+      "entryPoints": [
+        {
+          "name": "main",
+          "mode": "frag"
+        }
+      ],
+      "types": {
+        "_44": {
+          "name": "StageUniforms",
+          "members": [
+            {
+              "name": "uTime",
+              "type": "float",
+              "offset": 0
+            },
+            {
+              "name": "uBass",
+              "type": "float",
+              "offset": 4
+            },
+            {
+              "name": "uPixel",
+              "type": "float",
+              "offset": 8
+            },
+            {
+              "name": "uAlpha",
+              "type": "float",
+              "offset": 12
+            },
+            {
+              "name": "modelViewMatrix",
+              "type": "mat4",
+              "offset": 16,
+              "matrix_stride": 16
+            },
+            {
+              "name": "projectionMatrix",
+              "type": "mat4",
+              "offset": 80,
+              "matrix_stride": 16
+            }
+          ]
+        }
+      },
+      "inputs": [
+        {
+          "type": "vec3",
+          "name": "vC",
+          "location": 0
+        },
+        {
+          "type": "float",
+          "name": "vA",
+          "location": 1
+        }
+      ],
+      "outputs": [
+        {
+          "type": "vec4",
+          "name": "nativeColor",
+          "location": 0
+        }
+      ],
+      "textures": [
+        {
+          "type": "sampler2D",
+          "name": "uDotTex",
+          "set": 0,
+          "binding": 2
+        },
+        {
+          "type": "sampler2D",
+          "name": "uCoverTex",
+          "set": 0,
+          "binding": 1
+        }
+      ],
+      "ubos": [
+        {
+          "type": "_44",
+          "name": "StageUniforms",
+          "block_size": 144,
+          "set": 0,
+          "binding": 0
+        }
+      ]
+    }
+  }
+}

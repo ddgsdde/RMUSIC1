@@ -1,0 +1,13 @@
+{
+  "id": "example-plugin",
+  "name": "我的插件",
+  "version": "0.1.0",
+  "api_version": "1",
+  "core_api": ">=0.1.0, <2.0.0",
+  "entrypoint": "provider.py",
+  "capabilities": [
+    "search",
+    "contract_probe_v1"
+  ],
+  "kind": "source"
+}

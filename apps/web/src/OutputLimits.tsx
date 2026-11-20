@@ -1,0 +1,14 @@
+import type {OutputCapabilities} from "./native";
+import type {OutputLimits} from "@r-music/sdk";
+export function OutputLimitFields<T extends OutputLimits>({value,onChange,dsd=false,capabilities,hardwareVolume=false}:{value:T;onChange:(value:T)=>void;dsd?:boolean;capabilities?:OutputCapabilities;hardwareVolume?:boolean}){
+ const number=(key:keyof OutputLimits,raw:string)=>onChange({...value,[key]:raw===""?null:Number(raw)});
+ return <details className="output-advanced"><summary>格式、声道与音量限制</summary><div className="output-limit-grid">
+  <label>最大 PCM 采样率<select value={value.max_sample_rate??""} onChange={e=>number("max_sample_rate",e.target.value)}><option value="">保留音源采样率</option>{value.max_sample_rate&&!capabilities?.sample_rates?.includes(value.max_sample_rate)&&<option value={value.max_sample_rate}>{value.max_sample_rate/1000} kHz · 已保存上限</option>}{(capabilities?.sample_rates??[]).map(rate=><option key={rate} value={rate}>{rate/1000} kHz</option>)}</select></label>
+  <label>最大 PCM 有效位深<select value={value.max_bit_depth??""} onChange={e=>number("max_bit_depth",e.target.value)}><option value="">保留音源精度</option>{value.max_bit_depth&&!capabilities?.bit_depths?.includes(value.max_bit_depth)&&<option value={value.max_bit_depth}>{value.max_bit_depth} bit · 已保存上限</option>}{(capabilities?.bit_depths??[]).map(bits=><option key={bits} value={bits}>{bits} bit</option>)}</select></label>
+  {dsd&&<label>DSD 上限<select value={value.max_dsd_rate??""} onChange={e=>number("max_dsd_rate",e.target.value)}><option value="">按驱动支持的原始格式</option>{[64,128,256,512].map((rate,i)=><option key={rate} value={3072000*2**i}>DSD{rate}（含 44.1／48 kHz 系列）</option>)}</select></label>}
+  <label>声道配置<select value={value.channels??""} onChange={e=>number("channels",e.target.value)}><option value="">保持音源声道</option><option value={1}>单声道</option><option value={2}>双声道</option></select></label>
+  <label>起播重同步等待 (ms)<input type="number" min={0} max={5000} step={50} value={value.resync_delay_ms??0} onChange={e=>number("resync_delay_ms",e.target.value)}/></label>
+  <label>音量控制<select value={value.volume_control||"software"} onChange={e=>onChange({...value,volume_control:e.target.value as OutputLimits["volume_control"],...(e.target.value!=="software"?{volume_max:1}:{})})}>{hardwareVolume&&<option value="device">硬件设备音量</option>}<option value="software">软件音量</option><option value="fixed">固定 100% · 使用 DAC／功放调音量</option></select></label>
+  {value.volume_control==="software"&&<label>软件音量上限 (%)<input type="number" min={0} max={100} step={1} disabled={value.volume_control!=="software"} value={Math.round((value.volume_max??1)*100)} onChange={e=>onChange({...value,volume_max:Number(e.target.value)/100})}/></label>}
+ </div><p className="fine-print">默认不升频。PCM 超过上限时采用双方支持的较低格式，转换会显示在信号链。{dsd&&" DSD 超限会提示，不自动转为 PCM。"}</p></details>;
+}

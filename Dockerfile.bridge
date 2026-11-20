@@ -1,0 +1,17 @@
+FROM rust:1.92-bookworm AS build
+RUN apt-get update && apt-get install -y --no-install-recommends libasound2-dev pkg-config ffmpeg && rm -rf /var/lib/apt/lists/*
+WORKDIR /build
+COPY Cargo.toml Cargo.lock ./
+COPY crates ./crates
+COPY apps/desktop ./apps/desktop
+COPY proto ./proto
+
+FROM build AS binaries
+ARG BRIDGE_FEATURES=""
+RUN CARGO_INCREMENTAL=0 CARGO_BUILD_JOBS=2 cargo build --locked --release -p rmusic-bridge --features "$BRIDGE_FEATURES"
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends libasound2 ffmpeg ca-certificates && rm -rf /var/lib/apt/lists/* && useradd --uid 10001 --create-home rmusic
+COPY --from=binaries /build/target/release/rmusic-bridge /usr/local/bin/rmusic-bridge
+USER rmusic
+ENTRYPOINT ["rmusic-bridge"]

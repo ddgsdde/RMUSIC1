@@ -1,0 +1,85 @@
+.personal-similar {
+  position: fixed;
+  z-index: 90;
+  inset-block-start: calc(env(safe-area-inset-top, 0px) + 14px);
+  inset-inline-end: 16px;
+  width: min(330px, calc(100vw - 32px));
+  max-height: 55dvh;
+  overflow: auto;
+  padding: 14px 16px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border, #92968d);
+  border-radius: 12px;
+  box-shadow: 0 4px 18px #0003;
+}
+.personal-similar .section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.personal-similar .section-heading button {
+  padding: 4px 10px;
+  font-size: 20px;
+}
+.personal-song {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  text-align: start;
+  background: transparent;
+  color: inherit;
+}
+.personal-song span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.personal-song small {
+  margin-inline-start: auto;
+}
+.personal-song .cover {
+  width: 34px;
+  height: 34px;
+  flex: none;
+}
+.daily-shelf-actions { display:flex; align-items:center; gap:4px; }
+.daily-shelf-actions .icon-button { width:28px; height:28px; min-height:28px; padding:4px; }
+.daily-albums {
+  display:grid;
+  grid-template-columns:none;
+  grid-auto-flow:column;
+  grid-auto-columns:var(--album-shelf-card, 140px);
+  gap:var(--album-shelf-gap, 13px);
+  align-items:start;
+  overflow-x:auto;
+  scroll-snap-type:x proximity;
+  scrollbar-width:thin;
+  padding:2px 0 6px;
+}
+.daily-albums > .record-album { scroll-snap-align:start; }
+.personal-song small { max-width:38%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.daily-playlist-page ol { margin:0; padding:0; list-style:none; }
+.daily-playlist-page .discovery-track,.daily-page-columns {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 62px 48px 84px;
+  align-items:center;
+  gap:12px;
+}
+.daily-page-columns {
+  padding:0 8px 8px;
+  border-bottom:1px solid var(--border);
+}
+.daily-page-columns h2 { margin:0; font-size:16px; }
+.daily-page-columns > span,.daily-preference-score { color:var(--muted); font-size:12px; text-align:end; font-variant-numeric:tabular-nums; }
+.daily-playlist-page .discovery-track time { text-align:end; }
+.daily-track-label { display:grid; gap:4px; min-width:0; }
+.daily-track-label small { color:var(--muted); font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.daily-playlist-page .row-actions { justify-content:flex-end; }
+.daily-playlist-page .playlist-detail-heading h1 { margin:0 0 8px; font-size:clamp(22px,3vw,32px); }
+@media(max-width:700px) {
+  .daily-playlist-page .discovery-track,.daily-page-columns { grid-template-columns:minmax(0,1fr) 42px 54px; gap:8px; }
+}

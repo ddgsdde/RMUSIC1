@@ -1,0 +1,101 @@
+import {PlaybackSettings} from "./PlaybackSettings";
+import {deviceOutputLabels,outputName} from "./outputLabels";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AudioLines, Monitor, Plus, Speaker, Trash2, SlidersHorizontal, Check, Smartphone, Pencil, Settings2, ChevronRight, ChevronDown } from "lucide-react";
+import type { Endpoint, RMusicClient, Zone, DiscoveredService } from "@r-music/sdk";
+import { IconButton, Modal } from "./components";
+import { invokeNative,isNative,type AudioDevice,type DeviceOutput } from "./native";
+import {DeviceGroups} from "./DeviceGroups";
+import {OutputLimitFields} from "./OutputLimits";
+import {NativeSettings} from "./NativeSettings";
+import {PlaybackTransfer} from "./PlaybackTransfer";
+export function ZonesView({api,zones,endpoints,selected,localEndpointId,onSelect,refresh,onError,onDsp,
+ deviceGroups,
+ page="devices",onPageChange,canPurge=false,familySync=true,compact=false,
+}: {
+ compact?:boolean;deviceGroups?:boolean;familySync?:boolean;canPurge?:boolean;page?:"devices"|"groups";onPageChange?:(page:"devices"|"groups")=>void;groupPreset?:{ids:string[];key:number};
+ api:RMusicClient;zones:Zone[];endpoints:Endpoint[];selected:string;localEndpointId:string;onSelect:(id:string)=>void;onDsp:(id:string)=>void;
+ refresh:()=>Promise<unknown>;onError:(error:unknown)=>void;
+ groupStart:boolean;groupList?:boolean;groupQueue?:boolean;groupOutputTiming?:boolean;groupAutomaticRate?:boolean;groupSyncPolicy?:boolean;groupTransport?:boolean;groupResync?:boolean;groupQueueJump?:boolean;groupMembership?:boolean;groupClockDiagnostics?:boolean;groupRecovery?:boolean;outputGroups?:boolean;coreId:string;userId:string;
+}) {
+ const [snapshot,setSnapshot]=useState<{api:RMusicClient;items:AudioDevice[];removed?:AudioDevice[]}>();
+ const [deleting,setDeleting]=useState<AudioDevice|null>(null),[removing,setRemoving]=useState(false);
+ const [purging,setPurging]=useState<AudioDevice|null>(null),[purgeName,setPurgeName]=useState(""),[purgeBusy,setPurgeBusy]=useState(false);
+ const foldKey="rmusic.device-open:"+api.baseUrl;
+ const readFolds=()=>{try{const value=JSON.parse(localStorage.getItem(foldKey)||"{}");return value&&typeof value==="object"&&!Array.isArray(value)?value as Record<string,boolean>:{};}catch{return {};}};
+ const [folds,setFolds]=useState<Record<string,boolean>>(readFolds);
+ useEffect(()=>setFolds(readFolds()),[foldKey]);
+ const requestRevision=useRef(0),currentApi=useRef(api);currentApi.current=api;
+ const [editing,setEditing]=useState<{device:AudioDevice;output:DeviceOutput}|null>(null);
+ const [renaming,setRenaming]=useState<AudioDevice|null>(null),[alias,setAlias]=useState("");
+ const [adding,setAdding]=useState(false),[name,setName]=useState(""),[endpoint,setEndpoint]=useState(localEndpointId);
+ const [nearby,setNearby]=useState<DiscoveredService[]>([]);
+ const [localSettings,setLocalSettings]=useState(false);
+ const [deviceFilter,setDeviceFilter]=useState<"all"|"online">(compact?"online":"all");
+ const [expanded,setExpanded]=useState("");
+ const loadDevices=useCallback(async()=>{const revision=++requestRevision.current;try {const value=await api.get<{items:AudioDevice[];removed?:AudioDevice[]}>("/devices");if(currentApi.current===api&&revision===requestRevision.current)setSnapshot({api,items:value.items,removed:value.removed});}catch(error){if(currentApi.current===api&&(error as {status?:number}).status!==404)onError(error);}},[api,onError]);
+ useEffect(()=>{let pending=false;const load=async()=>{if(pending)return;pending=true;try{await loadDevices();}finally{pending=false;}};void load();const changed=()=>{if(!document.hidden)void load();};window.addEventListener("rmusic-devices-changed",changed);const timer=setInterval(changed,60000);return()=>{requestRevision.current++;window.removeEventListener("rmusic-devices-changed",changed);clearInterval(timer);};},[loadDevices]);
+ useEffect(()=>{if(!familySync){setNearby([]);return;}let active=true;const scan=async()=>{try{const result=isNative?await invokeNative<{items:DiscoveredService[]}>("native_discovery"):await api.get<{items:DiscoveredService[]}>("/discovery");if(active)setNearby(result.items.filter(item=>item.kind==="bridge"));}catch{}};void scan();const timer=setInterval(scan,10000);return()=>{active=false;clearInterval(timer);};},[api,familySync]);
+ const devices=snapshot?.api===api?[...snapshot.items]:endpoints.filter(e=>e.id!=="browser-local").map(e=>({id:e.id,name:e.name,platform:String(e.capabilities.platform||"browser"),online:e.online,outputs:[{id:e.id,name:"系统音频输出",kind:e.kind,online:e.online,endpoint:e}]} as AudioDevice));
+ const removed=snapshot?.api===api?snapshot.removed||[]:[];
+ const grouped=new Set(endpoints.filter(e=>e.kind==="group").flatMap(e=>e.group?.zone_ids||[]));
+ const known=new Set([...devices,...removed].flatMap(d=>d.outputs.map(o=>o.id)));
+ const isOpen=(device:AudioDevice)=>folds[device.id]??(device.id===localEndpointId||device.outputs.some(o=>zones.some(z=>z.id===selected&&z.endpoint_id===o.id)));
+ const toggleDevice=(device:AudioDevice)=>setFolds(old=>{const next={...old,[device.id]:!isOpen(device)};localStorage.setItem(foldKey,JSON.stringify(next));return next;});
+ const removeDevice=async()=>{if(!deleting)return;setRemoving(true);try{await api.delete(`/devices/${encodeURIComponent(deleting.id)}`);setDeleting(null);await loadDevices();await refresh();}catch(error){onError(error);}finally{setRemoving(false);}};
+ for(const zone of zones)if(!known.has(zone.endpoint_id)){known.add(zone.endpoint_id);devices.push({id:zone.endpoint_id,name:zone.name,platform:"",online:false,outputs:[{id:zone.endpoint_id,name:"系统音频输出",kind:"",online:false}]});}
+ const localDevice=(device:AudioDevice)=>device.id===localEndpointId||device.outputs.some(output=>output.id===localEndpointId);
+ devices.sort((a,b)=>Number(localDevice(b))-Number(localDevice(a))||Number(b.online)-Number(a.online)||a.name.localeCompare(b.name,"zh-CN"));
+ const visibleDevices=devices.filter(device=>deviceFilter==="all"||device.online);
+ const transfer=<PlaybackTransfer api={api} zones={zones} endpoints={endpoints} selected={selected} onTransferred={id=>{onSelect(id);void refresh();}}/>;
+ const saveName=async(event:React.FormEvent)=>{event.preventDefault();if(!renaming)return;try{await api.patch(`/devices/${encodeURIComponent(renaming.id)}`,{name:alias});setRenaming(null);await loadDevices();}catch(error){onError(error);}};
+ return <div className={`zones-view device-zones${compact?" device-zones-compact":""}`}>
+  <nav className="zones-tabs" aria-label="播放设备分类"><button aria-pressed={page==="devices"} onClick={()=>onPageChange?.("devices")}>设备与输出</button>{familySync&&<button aria-pressed={page==="groups"} onClick={()=>onPageChange?.("groups")}>设备组合</button>}</nav>
+  {(!familySync||page==="devices")&&<>
+  {!compact&&<div className="playback-transfer-entry">{transfer}</div>}
+  <div className="device-toolbar"><div className="device-filters" role="group" aria-label="设备筛选"><button aria-pressed={deviceFilter==="all"} onClick={()=>setDeviceFilter("all")}>全部设备 <span>{devices.length}</span></button><button aria-pressed={deviceFilter==="online"} onClick={()=>setDeviceFilter("online")}>在线 <span>{devices.filter(device=>device.online).length}</span></button></div><div className="device-toolbar-actions">{compact&&transfer}
+   <button aria-label="添加音区" onClick={()=>setAdding(true)}><Plus size={17}/>{!compact&&"添加音区"}</button>
+  </div></div>
+  {!compact&&<p className="device-hint">{familySync?"选择一个播放设备，或在“设备组合”中把多个房间合成一个设备。":"选择同账号的设备，可遥控播放或将队列流转到该设备。"}</p>}
+  <div className="device-list">{visibleDevices.map(device=><section className={`audio-device${localDevice(device)?" local-device":""}${device.online?"":" offline-device"}`} key={device.id}>
+   <header className="audio-device-heading"><button className="device-fold-heading" aria-label={`${isOpen(device)?"折叠":"展开"} ${device.name}`} aria-expanded={isOpen(device)} aria-controls={`outputs-${device.id}`} onClick={()=>toggleDevice(device)}>{device.platform==="android"?<Smartphone size={22}/>:["browser","windows","macos","linux"].includes(device.platform)?<Monitor size={22}/>:<Speaker size={22}/>}<span><span className="device-title" role="heading" aria-level={2} title={device.renameable?"双击编辑客户端名称":undefined} onDoubleClick={event=>{event.stopPropagation();if(device.renameable){setRenaming(device);setAlias(device.name);}}}>{device.name}</span><small>{localDevice(device)?"此设备 · ":""}{device.platform==="windows"?"Windows":device.platform==="android"?"Android":device.platform==="browser"?"浏览器":device.platform||"客户端／网桥"} · {device.online?"已连接":"离线"} · {device.outputs.length} 个输出</small></span>{isOpen(device)?<ChevronDown size={17}/>:<ChevronRight size={17}/>}</button>{device.renameable&&<IconButton label={`重命名 ${device.name}`} onClick={()=>{setRenaming(device);setAlias(device.name);}}><Pencil size={16}/></IconButton>}{snapshot?.api===api&&!device.outputs.some(o=>o.endpoint?.capabilities.native_client_v1===true||o.kind==="group"||zones.some(z=>z.endpoint_id===o.id&&grouped.has(z.id)))&&<IconButton label={`删除设备 ${device.name}`} onClick={()=>setDeleting(device)}><Trash2 size={17}/></IconButton>}</header>
+   <div className="device-outputs" id={`outputs-${device.id}`} hidden={!isOpen(device)}>{device.outputs.map(output=>{const outputZones=zones.filter(z=>z.endpoint_id===output.id),enabled=output.config?.enabled!==false;return <div className="audio-output" key={output.id}>
+    <div className="audio-output-heading"><AudioLines size={22}/><div className="audio-output-name"><strong title={output.configurable?"双击编辑输出名称与设置":undefined} onDoubleClick={()=>{if(output.configurable&&output.config)setEditing({device,output});}}>{outputName(output)}</strong><small><span className={`status-dot ${output.online?"online":""}`}/>{!enabled?"未启用":output.online?"在线":output.configurable?"等待设备连接":"离线"}{output.kind?` · ${{browser:"浏览器输出",android:"Android 音频",android_audiotrack:"系统音频",wasapi:"WASAPI",asio:"ASIO",alsa:"ALSA"}[output.kind]||output.kind.toUpperCase()}`:""}{output.config?.exclusive?" · 独占":""}{output.mix_rate?` · 系统混音 ${output.mix_rate/1000} kHz`:""}</small></div>{output.configurable&&output.config&&<button className="output-settings-button" aria-label={`${output.name} 输出设置`} onClick={()=>setEditing({device,output})}><Settings2 size={17}/><span>输出设置</span></button>}{!output.configurable&&isNative&&output.id===localEndpointId&&<button className="output-settings-button" onClick={()=>setLocalSettings(true)}><Settings2 size={17}/><span>本机输出设置</span></button>}</div>
+    {outputZones.map(zone=><div className={`output-zone ${selected===zone.id?"active":""}`} key={zone.id}>
+     <button className="output-zone-select" disabled={!enabled||grouped.has(zone.id)} aria-pressed={selected===zone.id} onClick={()=>onSelect(zone.id)}><span className="output-zone-marker">{selected===zone.id?<Check size={16}/>:<Speaker size={16}/>}</span><span><strong>{zone.name}</strong><small>{zone.track?`${zone.track.title} · ${zone.track.artist}`:"等待播放"}</small></span><span className="output-zone-state">{grouped.has(zone.id)?"已加入设备组合":zone.status==="playing"?"正在播放":zone.status==="paused"?"已暂停":selected===zone.id?"已选":"选择"}</span></button>
+     {!grouped.has(zone.id)&&<div className="output-zone-tools"><button className="zone-controls-button" aria-label={`${zone.name} 音区设置`} aria-expanded={expanded===zone.id} onClick={()=>setExpanded(expanded===zone.id?"":zone.id)}><SlidersHorizontal size={17}/><span>播放设置</span></button></div>}
+     {expanded===zone.id&&!grouped.has(zone.id)&&<div className="output-zone-details"><PlaybackSettings key={zone.id} api={api} zone={zone} endpoint={endpoints.find(e=>e.id===output.id)} refresh={refresh} onError={onError}/><label>音量<input aria-label={`${zone.name} 音量`} type="range" min="0" max="1" step="0.01" value={output.config?.volume_control==="device"?(output.device_volume?.value??1):output.config?.volume_control==="fixed"?1:zone.volume} disabled={output.config?.volume_control==="fixed"} onChange={e=>void (output.config?.volume_control==="device"?api.put(`/outputs/${encodeURIComponent(output.id)}/volume`,{value:Number(e.target.value)}):api.patch(`/zones/${zone.id}`,{volume:Number(e.target.value)})).then(()=>loadDevices()).then(refresh).catch(onError)}/><small>{Math.round((output.config?.volume_control==="device"?(output.device_volume?.value??1):output.config?.volume_control==="fixed"?1:zone.volume)*100)}%</small></label><div>{output.endpoint?.capabilities.dsp!==false&&<button onClick={()=>onDsp(zone.id)}>DSP 工作区</button>}{zones.length>1&&<IconButton label={`删除 ${zone.name}`} onClick={()=>void api.delete(`/zones/${zone.id}`).then(refresh).catch(onError)}><Trash2 size={16}/></IconButton>}</div></div>}
+    </div>)}
+    {!outputZones.length&&<p className="output-not-enabled">{enabled?"连接后会建立独立音区。":"在输出设置中启用此输出，即可创建独立音区。"}</p>}
+    {!compact&&!output.configurable&&<p className="output-managed-note">{output.kind==="browser"?"浏览器使用系统音频路由；设备选择与独占输出请使用原生客户端。":"输出配置由对应客户端或网桥管理。"}</p>}
+   </div>;})}</div>
+  </section>)}</div>
+  {!visibleDevices.length&&<p className="device-empty">暂无在线设备。请打开客户端或网桥并连接当前核心；也可切换“全部设备”检查已有输出。</p>}
+  {removed.length>0&&<details className="removed-devices"><summary>已移除设备 · {removed.length}</summary>{removed.map(device=><div key={device.id}><span>{device.name}</span><button onClick={()=>void api.post(`/devices/${encodeURIComponent(device.id)}/restore`,{}).then(loadDevices).then(refresh).catch(onError)}>恢复设备</button>{canPurge&&<button className="danger" onClick={()=>{setPurging(device);setPurgeName("");}}>彻底删除</button>}</div>)}</details>}
+  {nearby.filter(item=>!devices.some(d=>d.id===item.id)).map(item=><div className="discovered-output" key={item.id}><Speaker size={20}/><div><strong>{item.name}</strong><small>局域网网桥 · {item.core_id?"已关联核心":"待关联"} · {item.addresses[0]}</small></div></div>)}
+  </>}
+  {familySync&&page==="groups"&&<DeviceGroups api={api} zones={zones} endpoints={endpoints} selected={selected} supported={deviceGroups===true} onSelect={onSelect} refresh={refresh} onError={onError}/>}
+  {purging&&<Modal title={`彻底删除设备 · ${purging.name}`} onClose={()=>{if(!purgeBusy)setPurging(null);}}><p>将永久删除该设备的名称、输出配置和已归档音区队列，并移除组合中的对应音区。音乐文件、歌单和聆听历史保留。</p><p className="notice">此操作不可恢复。如果客户端或网桥仍在运行，重新连接后会作为新设备出现。</p><label>输入设备名称确认<input aria-label="确认彻底删除的设备名称" value={purgeName} onChange={e=>setPurgeName(e.target.value)}/></label><div className="form-actions"><button disabled={purgeBusy} onClick={()=>setPurging(null)}>取消</button><button className="danger" disabled={purgeBusy||purgeName!==purging.name} onClick={()=>{setPurgeBusy(true);void api.post(`/devices/${encodeURIComponent(purging.id)}/purge`,{confirmation:purging.id}).then(()=>{setPurging(null);return loadDevices();}).then(refresh).catch(onError).finally(()=>setPurgeBusy(false));}}>{purgeBusy?"正在删除…":"确认彻底删除"}</button></div></Modal>}
+  {deleting&&<Modal title={`删除设备 · ${deleting.name}`} onClose={()=>{if(!removing)setDeleting(null);}}><p>设备将从列表移除，并停止其输出。音区队列和输出设置会保留，可在“已移除设备”中恢复。</p><div className="form-actions"><button disabled={removing} onClick={()=>setDeleting(null)}>取消</button><button className="primary" disabled={removing} onClick={()=>void removeDevice()}>{removing?"正在移除…":"删除设备"}</button></div></Modal>}
+  {editing&&<Modal title={`${outputName(editing.output)} · 输出设置`} onClose={()=>setEditing(null)}><OutputSettings output={editing.output} api={api} onSaved={()=>{setEditing(null);void loadDevices();void refresh();}} onError={onError}/>{zones.filter(z=>z.endpoint_id===editing.output.id&&!grouped.has(z.id)).map(zone=><div key={zone.id}>{zones.filter(z=>z.endpoint_id===editing.output.id).length>1&&<h4>{zone.name}</h4>}<PlaybackSettings api={api} zone={zone} endpoint={endpoints.find(e=>e.id===editing.output.id)} refresh={refresh} onError={onError}/></div>)}</Modal>}
+  {localSettings&&<Modal title="本机音频输出" onClose={()=>setLocalSettings(false)}><NativeSettings api={api} onError={onError} notify={()=>setLocalSettings(false)}/></Modal>}
+  {renaming&&<Modal title="自定义设备名称" onClose={()=>setRenaming(null)}><form onSubmit={saveName}><label>设备名称<input value={alias} maxLength={100} required onChange={e=>setAlias(e.target.value)}/></label><p className="fine-print">名称保存在当前核心，定期设备注册不会覆盖。</p><button className="primary">保存名称</button></form></Modal>}
+  {adding&&<Modal title="创建音区" onClose={()=>setAdding(false)}><form onSubmit={e=>{e.preventDefault();void api.post("/zones",{name,endpoint_id:endpoint}).then(()=>{setAdding(false);setName("");return refresh();}).catch(onError);}}><label>音区名称<input required maxLength={80} value={name} onChange={e=>setName(e.target.value)} placeholder="例如 客厅"/></label><label>音频输出<select value={endpoint} onChange={e=>setEndpoint(e.target.value)}>{endpoints.map(output=><option value={output.id} key={output.id} disabled={!output.online}>{deviceOutputLabels(devices)[output.id]||output.name}{output.online?"":" · 离线"}</option>)}</select></label><button className="primary">创建音区</button></form></Modal>}
+ </div>;
+}
+function OutputSettings({output,api,onSaved,onError}:{output:DeviceOutput;api:RMusicClient;onSaved:()=>void;onError:(error:unknown)=>void}) {
+ const [alias,setAlias]=useState(output.name);const [config,setConfig]=useState(output.config!),[saving,setSaving]=useState(false);const asio=output.kind==="asio";
+ return <form className="output-config-form" onSubmit={e=>{e.preventDefault();setSaving(true);void api.patch(`/outputs/${encodeURIComponent(output.id)}`,{name:alias}).then(()=>api.put(`/outputs/${encodeURIComponent(output.id)}/config`,config)).then(onSaved).catch(onError).finally(()=>setSaving(false));}}>
+  <p className="output-config-target"><AudioLines size={21}/><span><strong>{outputName(output)}</strong><small>{output.kind.toUpperCase()} · 设置仅作用于此输出</small></span></p>
+  <label>输出名称<input required maxLength={100} value={alias} onChange={e=>setAlias(e.target.value)}/></label>
+  <label className="setting-row"><span><strong>启用输出</strong><small>启用后独立显示在音区中</small></span><input type="checkbox" checked={config.enabled} onChange={e=>setConfig({...config,enabled:e.target.checked})}/></label>
+  {output.kind!=="android"&&<label className="setting-row"><span><strong>{asio?"ASIO 驱动直连":"独占模式"}</strong><small>{asio?"由 ASIO 驱动直接管理设备":"共享模式会经过系统混音器"}</small></span><input type="checkbox" checked={asio||config.exclusive} disabled={asio||output.kind==="coreaudio"&&output.capabilities?.exclusive!==true||config.dsd_output!=="disabled"&&!!config.dsd_output} onChange={e=>setConfig({...config,exclusive:e.target.checked})}/></label>}
+  {output.kind==="android"&&<label>输出方式<select value={config.android_mode||"system"} onChange={e=>setConfig({...config,android_mode:e.target.value as typeof config.android_mode,exclusive:e.target.value==="usb_bitperfect"})}><option value="system">系统输出</option><option value="usb_bitperfect">USB 原样请求</option><option value="compatibility">PCM16 兼容输出</option></select></label>}
+  <label>缓冲时长 (ms)<input type="number" min={20} max={2000} step={10} required value={config.buffer_ms} onChange={e=>setConfig({...config,buffer_ms:Number(e.target.value)})}/></label>
+  {output.kind!=="android"&&(!!output.capabilities?.dsd?.length||!!config.dsd_output&&config.dsd_output!=="disabled")&&<label>DSD 输出<select value={config.dsd_output||"disabled"} onChange={e=>setConfig({...config,dsd_output:e.target.value as typeof config.dsd_output,exclusive:e.target.value!=="disabled"||asio||config.exclusive})}><option value="disabled">关闭</option><option value="dop" disabled={!output.capabilities?.dsd?.includes("dop")}>DoP</option><option value="native" disabled={!output.capabilities?.dsd?.includes("native")}>原生 DSD · 需驱动支持</option></select></label>}
+  {config.dsd_output&&config.dsd_output!=="disabled"&&<p className="fine-print">请仅为兼容设备启用。软件音量须为 100%，关闭 DSP 与淡入淡出，通过 DAC 调节音量。</p>}
+  <OutputLimitFields value={config} onChange={setConfig} capabilities={output.capabilities} hardwareVolume={output.device_volume?.supported===true} dsd={!!output.capabilities?.dsd?.length}/>
+  <p className="fine-print">保存后由对应设备接收；正在播放时保持当前配置，空闲后应用。默认不升频。系统混音格式不代表硬件采样率上限。</p>
+  <div className="form-actions"><button className="primary" disabled={saving}>{saving?"正在保存…":"保存输出配置"}</button></div>
+ </form>;
+}

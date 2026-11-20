@@ -1,0 +1,47 @@
+{
+  "id": "library-report",
+  "name": "曲库统计扩展示例",
+  "version": "0.1.0",
+  "api_version": "1",
+  "core_api": ">=0.1.0,<0.2.0",
+  "entrypoint": "provider.py",
+  "kind": "extension",
+  "extension_api": "1",
+  "license": "AGPL-3.0-or-later",
+  "extensions": [
+    {
+      "method": "summarize",
+      "kind": "statistics",
+      "scope": "read",
+      "effect": "none",
+      "context": "library_summary_v1",
+      "input": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "tracks": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "可用歌曲"
+          },
+          "sources": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "音源数量"
+          }
+        },
+        "required": [
+          "tracks",
+          "sources"
+        ],
+        "additionalProperties": false
+      },
+      "title": "曲库概览",
+      "description": "查看当前可用歌曲数量及音源分布"
+    }
+  ]
+}

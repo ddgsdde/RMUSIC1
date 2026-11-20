@@ -1,0 +1,7 @@
+Liser visual and motion reference
+Copyright BluFin Designs and Liser contributors
+Upstream: https://github.com/BluFin-Designs/liser
+Reference commit: 2f2bf3c965de24a52a9cd81d4b9d8e13ba3bedcc
+License: GNU GPL version 3; see liser-GPL-3.0.txt.
+
+R-Music adaptations (2026-10-31): React/WebView implementation of floating navigation, rounded mini/full player, colour palettes and motion timings, using the existing R-Music Core and native audio engine. No Liser branding, illustration or audio engine is included. R-Music source is distributed under AGPL-3.0.

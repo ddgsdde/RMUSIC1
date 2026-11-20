@@ -1,0 +1,32 @@
+{
+  "title": "R-Music",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect your R-Music core",
+        "description": "Create a revocable API token with read and control scopes in R-Music Settings. Include the complete path prefix in the core URL. Certificate verification applies only to this core.",
+        "data": {"url": "Core URL", "token": "API token", "verify_ssl": "Verify HTTPS certificate"}
+      },
+      "reauth_confirm": {
+        "title": "Replace the R-Music API token",
+        "description": "The existing token has expired or was revoked. Enter a new token with read and control scopes.",
+        "data": {"url": "Core URL", "token": "API token", "verify_ssl": "Verify HTTPS certificate"}
+      },
+      "reconfigure": {
+        "title": "Reconfigure R-Music",
+        "data": {"url": "Core URL", "token": "API token", "verify_ssl": "Verify HTTPS certificate"}
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to the core. Check the address, port, path and certificate.",
+      "invalid_auth": "Token expired, revoked or missing required scopes.",
+      "invalid_url": "Enter an HTTP(S) URL without credentials, query or fragment."
+    },
+    "abort": {
+      "already_configured": "This core is already configured.",
+      "reauth_successful": "Authentication updated.",
+      "reconfigure_successful": "Configuration updated.",
+      "wrong_core": "The URL belongs to a different configured core. Add it as a separate integration."
+    }
+  }
+}
